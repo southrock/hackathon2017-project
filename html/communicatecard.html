@@ -9,36 +9,34 @@
   <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <title>交流卡</title>
   <script type="text/javascript">
-    function imgPreview(fileDom){
-        //判断是否支持FileReader
-        if (window.FileReader) {
-            var reader = new FileReader();
-        } else {
-            alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
-        }
+    function imgPreview(fileDom) {
+      //判断是否支持FileReader
+      if (window.FileReader) {
+        var reader = new FileReader();
+      } else {
+        alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+      }
 
-        //获取文件
-        var file = fileDom.files[0];
-        var imageType = /^image\//;
-        //是否是图片
-        if (!imageType.test(file.type)) {
-            alert("请选择图片！");
-            return;
-        }
-        //读取完成
-        reader.onload = function(e) {
-            //获取图片dom
-            var img = document.getElementById("preview");
-            //图片路径设置为读取的图片
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
+      //获取文件
+      var file = fileDom.files[0];
+      var imageType = /^image\//;
+      //是否是图片
+      if (!imageType.test(file.type)) {
+        alert("请选择图片！");
+        return;
+      }
+      //读取完成
+      reader.onload = function (e) {
+        //获取图片dom
+        var img = document.getElementById("preview");
+        //图片路径设置为读取的图片
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
     }
   </script>
 
   <style>
-    
-    
     body {
       margin: 0;
       padding: 0;
@@ -68,7 +66,8 @@
       bottom: 16px;
     }
 
-    .left-arrow1,.left-arrow2 {
+    .left-arrow1,
+    .left-arrow2 {
       width: 0;
       height: 0;
       display: block;
@@ -101,8 +100,6 @@
       bottom: 12.5px;
       font-family: PingFangSC-Light;
       font-size: 18px;
-      font-weight: normal;
-      font-stretch: normal;
       line-height: 0px;
       letter-spacing: -1.5px;
       color: #000000;
@@ -116,6 +113,8 @@
 
     .mainbkpc p {
       height: 1.6rem;
+      width: 20rem;
+      min-width: 200px;
       font-family: PingFangSC-Ultralight;
       font-size: 1.8rem;
       font-weight: normal;
@@ -127,7 +126,6 @@
       position: relative;
       left: 6.5rem;
       top: -0.5rem;
-      min-width: 200px;
 
     }
 
@@ -157,12 +155,12 @@
       padding: 6px 2rem;
 
     }
-    
+
     .ipt_pic {
       border: solid #cccccc;
       border-width: 0 0 1px 0;
-      box-shadow: inset 0 0 1px 0 rgba(0,0,0,.075);
-      transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+      box-shadow: inset 0 0 1px 0 rgba(0, 0, 0, .075);
+      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
       height: 20rem;
 
     }
@@ -188,7 +186,7 @@
       font-weight: 500;
       position: relative;
       top: -7.5rem;
-      border: solid rgba(17,17,17,.5);
+      border: solid rgba(17, 17, 17, .5);
       border-width: 1px 0 0 0;
       display: block;
       margin: 0 0.5rem;
@@ -196,7 +194,7 @@
 
     }
 
-    .radio p { 
+    .radio p {
       position: relative;
       top: 0.8rem;
       padding: 0;
@@ -240,7 +238,6 @@
       bottom: 3rem;
 
     }
-
   </style>
 </head>
 
@@ -265,38 +262,42 @@
     <div class="row">
       <div class="inputbox">
         <span class="bk col-xs-12"></span>
-        <textarea class="form-control col-xs-12 ipt_text" rows="4" maxlength="140" >缘分从说开始...</textarea>
-        
+        <textarea class="col-xs-12 ipt_text" rows="4" maxlength="140">缘分从说开始...</textarea>
+
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12" style="padding: 0;">
         <div class="ipt_pic">
           <div class="pic_upload">
-            <input type="file" name="file" onchange="imgPrview(this)"/>
+            <input type="file" name="file" onchange="imgPrview(this)" />
           </div>
         </div>
       </div>
     </div>
     <div class="radio num row">
       <p>份数</p>
-      <label class="radio_num col-xs-2" style="padding-left:3.5rem;"><input type="radio" name="num" style="position: relative;">1份</label>
-      <label class="radio_num col-xs-2" style="padding-left:3.5rem;"><input type="radio" name="num" style="position: relative;">2份</label>
-      <label class="radio_num col-xs-2" style="padding-left:3.5rem;"><input type="radio" name="num" style="position: relative;">3份</label>
-      <label class="radio_num col-xs-2" style="padding-left:3.5rem;"><input type="radio" name="num" style="position: relative;">4份</label>   
-      </div>   
+      <label class="radio_num col-xs-2" style="padding-left:3.5rem;">
+        <input type="radio" name="num" style="position: relative;">1份</label>
+      <label class="radio_num col-xs-2" style="padding-left:3.5rem;">
+        <input type="radio" name="num" style="position: relative;">2份</label>
+      <label class="radio_num col-xs-2" style="padding-left:3.5rem;">
+        <input type="radio" name="num" style="position: relative;">3份</label>
+      <label class="radio_num col-xs-2" style="padding-left:3.5rem;">
+        <input type="radio" name="num" style="position: relative;">4份</label>
+    </div>
     <div class="radio receiver row" style="margin-top: 0;">
       <p>范围</p>
-      <label class="radio_receiver col-xs-2" style="padding-left: 2.5rem;"><input type="radio" name="receiver" style="position: relative;width: 0.8rem;">全校</label>
-      <label class="radio_receiver col-xs-2" style="padding-left: 2rem;padding-right:0;"><input type="radio" name="receiver" style="position: relative;width: 0.5rem;">同学院</label>
+      <label class="radio_receiver col-xs-2" style="padding-left: 2.4rem;">
+        <input type="radio" name="receiver" style="position: relative;width: 0.8rem;">全校</label>
+      <label class="radio_receiver col-xs-2" style="padding-left: 2rem;padding-right:0;">
+        <input type="radio" name="receiver" style="position: relative;width: 0.5rem;">同学院</label>
     </div>
     <div class="bottm row" style="text-align: center">
-      <button class="bottom bt_send">寄出</button>  
-    </div>   
+      <button class="bottom bt_send">寄出</button>
     </div>
   </div>
 
-  </div>
 </body>
 
 </html>
