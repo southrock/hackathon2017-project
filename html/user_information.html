@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <title>用户资料</title>
+  <script type="text/javascript">
+    function imgPreview(fileDom) {
+      //判断是否支持FileReader
+      if (window.FileReader) {
+        var reader = new FileReader();
+      } else {
+        alert("您的设备不支持图片预览功能，如需该功能请升级您的设备！");
+      }
+
+      //获取文件
+      var file = fileDom.files[0];
+      var imageType = /^image\//;
+      //是否是图片
+      if (!imageType.test(file.type)) {
+        alert("请选择图片！");
+        return;
+      }
+      //读取完成
+      reader.onload = function (e) {
+        //获取图片dom
+        var img = document.getElementById("preview");
+        //图片路径设置为读取的图片
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-size: 16px;
+      min-width: 325px;
+    }
+
+    .nav {
+      background: #dd8c61;
+      min-height: 44px;
+    }
+
+    .nav a {
+      position: relative;
+      top: 13px;
+      left: 4px;
+      display: inline-block;
+      text-decoration-line: none;
+
+    }
+
+    .arrow {
+      display: inline-block;
+      position: relative;
+      bottom: 16px;
+    }
+
+    .left-arrow1,
+    .left-arrow2 {
+      width: 0;
+      height: 0;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 5;
+      /*兼容ie8-*/
+      border-top: 10px transparent dashed;
+      border-left: 10px transparent dashed;
+      border-bottom: 10px transparent dashed;
+      border-right: 10px #dd8c61 solid;
+      overflow: hidden;
+
+    }
+
+    .left-arrow1 {
+      border-right: 10px black solid;
+    }
+
+    .left-arrow2 {
+      left: 2.5px;
+      /*重要*/
+      border-right: 10px #dd8c61 solid;
+    }
+
+    .nav a p {
+      position: relative;
+      left: 36px;
+      bottom: 12.5px;
+      font-family: PingFangSC-Light;
+      font-size: 18px;
+      font-weight: normal;
+      font-stretch: normal;
+      line-height: 0px;
+      letter-spacing: -1.5px;
+      color: #000000;
+
+    }
+
+    .avatar_zone {
+      box-shadow: 0 0 1px 0 rgba(0, 0, 0, .5);
+      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      height: 19rem;
+
+    }
+
+    .avatar_zone a {
+      display: inline-block;
+    }
+
+    .avatar {
+      position: relative;
+      top: 4rem;
+      padding: 0;
+      text-align: center;
+
+    }
+
+    .pic_upload {
+      display: inline-block;
+      background: #ebebeb url(camera.png) no-repeat center center;
+      border-radius: 40rem;
+      border: 0.6rem solid #dfa98c;
+
+
+    }
+
+    .pic_upload input {
+      display: inline-block;
+      opacity: 0;
+      height: 9rem;
+      width: 9rem;
+
+    }
+
+    .links {
+      position: relative;
+      top: 2.2rem;
+      margin: 0 5rem;
+
+    }
+
+    .inf_zone {
+      position: relative;
+      top: 2rem;
+      box-shadow: 0 0 1px 0 rgba(0, 0, 0, .5);
+      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      padding: 0 15px;
+      margin: 0 -15px;
+
+    }
+
+    .inf_line {
+      height: 5rem;
+      border-style: solid;
+      border-width: 0 0 1px 0;
+      margin: 0;
+      padding: 0;
+
+
+    }
+    
+    .type {
+      font-size: 1.7rem;
+      display: inline-block;
+      padding: 0;
+
+    }
+
+    .type p {
+      line-height: 4.8rem;
+      margin: 0;
+      font-weight: 550;
+
+    }
+
+    .value {
+      display: block;
+      font-size: 1.7rem;
+      float: right;
+      line-height: 4.8rem;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+  <div class="nav navbar">
+    <a href="#">
+      <span class="arrow">
+        <i class="left-arrow1"></i>
+        <i class="left-arrow2"></i>
+      </span>
+      <p>个人</p>
+    </a>
+  </div>
+  <div class="container">
+    <div class="avatar_zone row">
+      <div class="avatar">
+        <a href="#" class="links">
+          <img src="habit.png">
+        </a>
+        <div class="pic_upload">
+          <input type="file" name="file" onchange="imgPrview(this)" />
+        </div>
+        <a href="#" class="links">
+          <img src="edit.png">
+        </a>
+      </div>
+    </div>
+    <div class="inf_zone">
+      <div class="inf_line row">
+        <div class="type">
+          <p>昵称</p>
+        </div>
+        <div class="value">
+          <p>example</p>
+        </div>
+      </div>
+      <div class="inf_line row">
+        <div class="type">
+          <p>性别</p>
+        </div>
+        <div class="value">
+          <p></p>
+        </div>
+      </div>
+      <div class="inf_line row">
+        <div class="type">
+          <p>学院</p>
+        </div>
+        <div class="value">
+          <p></p>
+        </div>
+      </div>
+      <div class="inf_line row">
+        <div class="type">
+          <p>年级</p>
+        </div>
+        <div class="value">
+          <p></p>
+        </div>
+      </div>
+      <div class="inf_line row" style="border:0;">
+        <div class="type">
+          <p>个性签名</p>
+        </div>
+        <div class="value">
+          <p></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
