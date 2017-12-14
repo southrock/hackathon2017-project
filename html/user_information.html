@@ -30,7 +30,8 @@
         //获取图片dom
         var img = document.getElementById("preview");
         //图片路径设置为读取的图片
-        img.src = e.target.result;
+        img.style.backgroundImage = "url(" + e.target.result + ")";
+        img.style.backgroundSize = "cover";
       };
       reader.readAsDataURL(file);
     }
@@ -213,8 +214,8 @@
         <a href="#" class="links">
           <img src="habit.png">
         </a>
-        <div class="pic_upload">
-          <input type="file" name="file" onchange="imgPrview(this)" />
+        <div class="pic_upload" id="preview">
+          <input type="file" name="file" onchange="imgPreview(this)" />
         </div>
         <a href="#" class="links">
           <img src="edit.png">

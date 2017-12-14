@@ -30,10 +30,20 @@
         //获取图片dom
         var img = document.getElementById("preview");
         //图片路径设置为读取的图片
-        img.src = e.target.result;
+        img.style.backgroundImage = "url(" + e.target.result + ")";
+        img.style.backgroundSize = "cover";
+        
       };
       reader.readAsDataURL(file);
     }
+
+    function text_area() {
+      var x = document.getElementById("text");
+      x.style.color = "#000";
+      x.innerText = "";
+
+    }
+
   </script>
 
   <style>
@@ -149,7 +159,7 @@
       font-size: 2rem;
       font-weight: normal;
       font-stretch: normal;
-      color: #000000;
+      color: rgb(210, 210, 210);
       border-width: 0 0 0 0;
       border-radius: 0;
       padding: 6px 2rem;
@@ -169,8 +179,10 @@
       display: inline-block;
       background: #ebebeb url(camera.png) no-repeat center center;
       position: relative;
+      background-repeat: no-repeat;
       left: 2rem;
       top: 2.4rem;
+
     }
 
     .pic_upload input {
@@ -215,29 +227,56 @@
       line-height: 2rem;
       letter-spacing: 1px;
 
-
     }
 
     .radio input {
       opacity: 0;
       width: 0.01rem;
       height: 0.01rem;
+
     }
 
-    .bt_send {
+    .radio span {
+      display: inline-block;
+      background: rgb(237,28,36);
+      height: 8px;
+      width: 8px;
+      position: relative;
+      bottom: 2.9rem;
+      left: 1rem;
+      opacity: 0;
+      border-radius: 20rem;
+
+    }
+
+    input[type="radio"]:checked + span {
+      opacity: 1;
+
+}
+
+    .receiver span {
+      position: relative;
+      left: 2rem;
+
+    }
+
+    .bt_send{
       height: 5rem;
       width: 10rem;
       background-color: #e89366;
       border-radius: 30px;
       color: #ffffff;
       font-size: 2rem;
+      border: 0;
+
     }
+
 
     .bottom {
       position: relative;
-      bottom: 3rem;
-
+      bottom: 2rem;
     }
+
   </style>
 </head>
 
@@ -262,15 +301,14 @@
     <div class="row">
       <div class="inputbox">
         <span class="bk col-xs-12"></span>
-        <textarea class="col-xs-12 ipt_text" rows="4" maxlength="140">缘分从说开始...</textarea>
-
+        <textarea class="col-xs-12 ipt_text" rows="4" maxlength="140" onclick="text_area()" id="text">缘分从说开始...</textarea>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-12" style="padding: 0;">
         <div class="ipt_pic">
-          <div class="pic_upload">
-            <input type="file" name="file" onchange="imgPrview(this)" />
+          <div class="pic_upload" id="preview">
+            <input type="file" name="file" onchange="imgPreview(this)" />
           </div>
         </div>
       </div>
@@ -278,23 +316,23 @@
     <div class="radio num row">
       <p>份数</p>
       <label class="radio_num col-xs-2" style="padding-left:3.5rem;">
-        <input type="radio" name="num" style="position: relative;">1份</label>
+        <input type="radio" name="num" style="position: relative;" checked>1份<span></span></label>
       <label class="radio_num col-xs-2" style="padding-left:3.5rem;">
-        <input type="radio" name="num" style="position: relative;">2份</label>
+        <input type="radio" name="num" style="position: relative;">2份<span></span></label>
       <label class="radio_num col-xs-2" style="padding-left:3.5rem;">
-        <input type="radio" name="num" style="position: relative;">3份</label>
+        <input type="radio" name="num" style="position: relative;">3份<span></span></label>
       <label class="radio_num col-xs-2" style="padding-left:3.5rem;">
-        <input type="radio" name="num" style="position: relative;">4份</label>
+        <input type="radio" name="num" style="position: relative;">4份<span></span></label>
     </div>
     <div class="radio receiver row" style="margin-top: 0;">
       <p>范围</p>
       <label class="radio_receiver col-xs-2" style="padding-left: 2.4rem;">
-        <input type="radio" name="receiver" style="position: relative;width: 0.8rem;">全校</label>
+        <input type="radio" name="receiver" style="position: relative;width: 0.8rem;" checked>全校<span></span></label>
       <label class="radio_receiver col-xs-2" style="padding-left: 2rem;padding-right:0;">
-        <input type="radio" name="receiver" style="position: relative;width: 0.5rem;">同学院</label>
+        <input type="radio" name="receiver" style="position: relative;width: 0.5rem;">同学院<span style="left:2.5rem;"></span></label>
     </div>
-    <div class="bottm row" style="text-align: center">
-      <button class="bottom bt_send">寄出</button>
+    <div class="bottom row" style="text-align: center">
+      <input type="button" class="bt_send" value="寄出"></button>
     </div>
   </div>
 
