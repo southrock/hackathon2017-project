@@ -6,8 +6,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <title>兴趣</title>
+
+  <script>
+    $(document).ready(function() {
+      var i = 0;
+      var back_up = document.getElementsByClassName("add").item(0).innerHTML;
+
+      $("input,textarea").click(function() {
+        $(this).css("color","#000");
+        $(this).val("");
+      });
+      
+      
+      $(document).on("click",".bt_add",function() {
+        if(i%2 == 0) {
+          $(this).parent().html("<input type='text' class='custom_habit'>");
+        }
+        else {
+          $(this).parent().html("<input type='text' class='custom_habit label_right'>");
+        }
+        $(document).on("change",".custom_habit",function() {
+          var x = document.getElementsByClassName("custom_habit").item(0).value;
+          document.getElementsByClassName("add").item(0).remove();
+          var object = document.getElementById("custom_habit_zone");
+          var son = document.createElement("div");
+          son.className = "docker col-xs-6";
+          if(i%2 === 0){
+            son.innerHTML = "<span class='label label_color_" + Math.floor(Math.random()*3 + 1) + "'>" + x + "<a href='javascript:;' id='cha'>×</a>";
+          }
+          else {
+            son.innerHTML = "<span class='label label_color_" + Math.floor(Math.random()*3 + 1) + "' label_right'>" + x + "<a href='javascript:;' id='cha'>×</a>";
+          }
+          object.appendChild(son);
+          if($(".docker").length < 8) {
+            var new_add = document.createElement("div");
+            new_add.className = "docker col-xs-6 add";
+            new_add.innerHTML = back_up;
+            object.appendChild(new_add);
+            i = i + 1;
+          }
+        });
+      });
+
+      $(document).on('click','#cha',function() {
+        $(this).parent().parent().remove();
+        if($(".docker").length < 8) {
+          var new_add = document.createElement("div");
+          new_add.className = "docker col-xs-6 add";
+          new_add.innerHTML = back_up;
+          object.appendChild(new_add);
+        }
+      });
+
+    })
+
+
+  
+  
+  </script>
 
   <style>
     body {
@@ -103,7 +162,7 @@
     }
 
     .label {
-      display: inline-block;
+      display: block;
       height: 2.5rem;
       width: 97%;
       background-color: #ebebeb;
@@ -112,6 +171,7 @@
       text-align: left;
       line-height: 2rem;
       padding-left: 1.2rem;
+      z-index: 1;
 
     }
 
@@ -127,8 +187,33 @@
       background: #fdc689;
     }
 
+    #cha {
+      display: inline-block;
+      position: absolute;
+      left: 88%;
+      z-index: 10;
+      font-size: 2.2rem;
+      font-weight: 100;
+      
+    }
+
+    .custom_habit {
+      display: block;
+      height: 2.5rem;
+      width: 97%;
+      background-color: #ebebeb;
+      border-radius: 4px;
+      color: #000;
+      text-align: left;
+      line-height: 2rem;
+      padding-left: 1.2rem;
+      border: 0;
+      float: left;
+
+    }
+
     .label_right {
-      float: right;
+      float: left;
     }
 
     .docker {
@@ -156,7 +241,6 @@
       margin: 0;
       padding: 0;
 
-
     }
     
     .type {
@@ -175,6 +259,7 @@
 
     .ipt_habit {
       padding: 0;
+      color: rgba(0, 0, 0, .54);
 
     }
 
@@ -205,7 +290,7 @@
       font-size: 1.5rem;
       font-weight: normal;
       font-stretch: normal;
-      color: #000000;
+      color: rgba(0, 0, 0, .54);
       border-width: 0 0 0 0;
       border-radius: 4px;
       padding: 6px 1rem;
@@ -253,9 +338,8 @@
     <div class="headline row">
       <p class="col-xs-12">贴上你的标签，变得与众不同</p>
     </div>
-    <div class="labels_zone row">
-      <div class="docker col-xs-6"><span class="label label_color_1">自定义...</span></div>
-      <div class="docker col-xs-6"><span class="label label_color_2 label_right">自定义...</span></div>
+    <div class="labels_zone row" id="custom_habit_zone">
+      <div class="docker add col-xs-6 custom"><span class="label bt_add">自定义...</span></div>
     </div>
     <div class="habits_zone row">
       <div class="habits row">

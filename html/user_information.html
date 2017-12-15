@@ -35,6 +35,29 @@
       };
       reader.readAsDataURL(file);
     }
+
+    function bt_edit() {
+      if(document.getElementsByClassName("bt_zone").length === 0) {
+        var nickname = document.getElementById("nickname");
+        var sighnature = document.getElementById("sighnature");
+        var default_nn = nickname.innerText;
+        var default_sn = sighnature.innerText;
+        nickname.innerHTML = "<input type='text' class='hd_ipt' id='nn_value' value='" + default_nn + "'>";
+        sighnature.innerHTML = "<input type='text' class='hd_ipt' id='sn_value' value='" + default_sn + "'>";
+        var bt_zone = document.createElement("div");
+        bt_zone.className = "bt_zone row";
+        var bt_save = document.createElement("button");
+        bt_save.innerText = "保存";
+        bt_save.className = "bt_save col-xs-12";
+        bt_zone.appendChild(bt_save);
+        document.getElementById("mainbody").appendChild(bt_zone);
+      }
+      else {
+        window.alert("请完成编辑");
+      }       
+
+    }
+
   </script>
 
   <style>
@@ -45,6 +68,8 @@
       height: 100%;
       font-size: 16px;
       min-width: 325px;
+      background: #fcfbfb;
+
     }
 
     .nav {
@@ -113,6 +138,7 @@
       box-shadow: 0 0 1px 0 rgba(0, 0, 0, .5);
       transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
       height: 19rem;
+      background: #fff;
 
     }
 
@@ -148,7 +174,7 @@
     .links {
       position: relative;
       top: 2.2rem;
-      margin: 0 5rem;
+      margin: 0 13.4%;
 
     }
 
@@ -159,6 +185,7 @@
       transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
       padding: 0 15px;
       margin: 0 -15px;
+      background:#fff; 
 
     }
 
@@ -171,7 +198,7 @@
 
 
     }
-    
+
     .type {
       font-size: 1.7rem;
       display: inline-block;
@@ -191,9 +218,34 @@
       font-size: 1.7rem;
       float: right;
       line-height: 4.8rem;
+      color: rgba(0, 0, 0, .54);
 
     }
 
+    .hd_ipt {
+      background: #ebebeb;
+      height: 2.5rem;
+      border: 0;
+    }
+
+    .bt_zone {
+      position: relative;
+      bottom: -9rem;
+
+    }
+
+    .bt_save {
+      height: 5.5rem; 
+      width: 92%;
+      display: block;
+      margin: 0 4%;
+      background: #ffffff;
+      border: 0;
+      color: #e16929;
+      box-shadow: 0 0 1px rgba(0, 0, 0, .5);
+
+    }
+  
   </style>
 
 </head>
@@ -208,7 +260,7 @@
       <p>个人</p>
     </a>
   </div>
-  <div class="container">
+  <div class="container" id="mainbody">
     <div class="avatar_zone row">
       <div class="avatar">
         <a href="#" class="links">
@@ -217,7 +269,7 @@
         <div class="pic_upload" id="preview">
           <input type="file" name="file" onchange="imgPreview(this)" />
         </div>
-        <a href="#" class="links">
+        <a href="javascript:;" class="links" onclick="bt_edit()">
           <img src="edit.png">
         </a>
       </div>
@@ -227,7 +279,7 @@
         <div class="type">
           <p>昵称</p>
         </div>
-        <div class="value">
+        <div class="value" id="nickname">
           <p>example</p>
         </div>
       </div>
@@ -259,7 +311,7 @@
         <div class="type">
           <p>个性签名</p>
         </div>
-        <div class="value">
+        <div class="value" id="sighnature">
           <p></p>
         </div>
       </div>
