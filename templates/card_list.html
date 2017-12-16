@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <title>我的卡片</title>
+
+  <script>
+  $(document).ready(function() {
+    $.get('/findcard',
+      function(data) {
+        if(data.status == 'have'){
+          for(var i = 1;i < data.length;i++) {
+            var fromId = data.i.fromID;
+            var fromName = data.i.fromname;
+            var message = data.i.whatsay;
+            var x = "";
+            x += "<div class='box' id='card_box'><div class='card_line row'><div class='inf_div'><img src='avatar.jpg' class='avatar'><div class='text_zone'><p class='his_name'>" + fromName + "</p><p class='content'>" + message + "</p></div><span>删除</span></div>";
+            
+          }
+          $("#card_box").html(x);
+        }
+      })
+
+
+
+  });
+  
+  
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-size: 16px;
+      min-width: 325px;
+      background: #ebebeb;
+
+    }
+
+    .nav {
+      background: #dd8c61;
+      min-height: 44px;
+    }
+
+    .nav a {
+      position: relative;
+      top: 13px;
+      left: 4px;
+      display: inline-block;
+      text-decoration-line: none;
+
+    }
+
+    .arrow {
+      display: inline-block;
+      position: relative;
+      bottom: 16px;
+    }
+
+    .left-arrow1,
+    .left-arrow2 {
+      width: 0;
+      height: 0;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 5;
+      /*兼容ie8-*/
+      border-top: 10px transparent dashed;
+      border-left: 10px transparent dashed;
+      border-bottom: 10px transparent dashed;
+      border-right: 10px #dd8c61 solid;
+      overflow: hidden;
+
+    }
+
+    .left-arrow1 {
+      border-right: 10px black solid;
+    }
+
+    .left-arrow2 {
+      left: 2.5px;
+      /*重要*/
+      border-right: 10px #dd8c61 solid;
+    }
+
+    .nav a p {
+      position: relative;
+      left: 36px;
+      bottom: 12.5px;
+      font-family: PingFangSC-Light;
+      font-size: 18px;
+      font-weight: normal;
+      font-stretch: normal;
+      line-height: 0px;
+      letter-spacing: -1.5px;
+      color: #000000;
+
+    }
+
+    .container {
+      padding: 0;
+
+    }
+
+    .bt_nav button{
+      display: inline-block;
+      height: 5rem;
+      background: #fff;
+      color: rgba(0, 0, 0, 0.87);
+      border: 0;
+
+
+    }
+  
+    .box {
+      text-align: center;
+      box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+      padding: 0;
+      background: #fff;
+      position: relative;
+      top: 0.4rem;
+
+    }
+
+    .box p {
+      display: block;
+      height: 50%;
+      float: left;
+
+    }
+
+    .card_line {
+      min-height: 8rem;
+      height: auto;
+      
+    }
+
+    .avatar {
+      border-radius: 20rem;
+      display: block;
+      height: 13%;
+      width: 13%;
+      float: left;
+      margin: 5%;
+
+    }
+
+    .inf_zone {
+      width: auto;
+      text-align: left;
+
+
+    }
+
+    .text_zone {
+      display: block;
+      height: 100%;
+      width: 60%;
+      float: left;
+      margin-top: 5%;
+    }
+
+    .his_name {
+      width: 100%;
+      text-align: left;
+    }
+
+    .content {
+      font-size: 1.3rem;
+      margin-left: 0;
+      text-align: left;
+      width: 100%;
+
+
+    }
+
+  .card_line span {
+    display: inline-block;
+    margin: 8% 4% 8% 0;
+    color: rgba(0, 0, 0, 0.75);
+    background-color: #ebebeb;
+    border-radius: 4px;
+    padding: 0.4rem 0;
+    width: 12%;
+
+  }    
+
+  </style>
+
+</head>
+
+<body>
+  <div class="nav navbar" style="margin-bottom:0;">
+      <a href="/main">
+        <span class="arrow">
+          <i class="left-arrow1"></i>
+          <i class="left-arrow2"></i>
+        </span>
+        <p>我的卡片</p>
+      </a>
+    </div>
+    <div class="container">
+      <div class="bt_nav row">
+          <button class="col-xs-6">收到的卡</button>
+          <button class="col-xs-6">寄出的卡</button>
+      </div>
+    </div>
+</body>
+</html>

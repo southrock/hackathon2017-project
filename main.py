@@ -41,6 +41,33 @@ def getcard():
             card.commit()
             card.close()
 
+@app.route('/findmycard')
+def findmycard():
+    card = sqlite3.connect('sql/card.db')
+    c = card.cursor()
+    c.execute('select getID,whatsay from card where (fromID = "%s" and getID <> NULL)'%session.get('schid'))
+    a = c.fetchall()
+    card.close()
+    final={}
+    if a:
+        final['status']='have'
+        for q in range(len(a)):
+            information = sqlite3.connect('aql/information.db')
+            c = information.cursor()
+            c.execute('select nickname from information where schid = "%s"'%q[0])
+            d = c.fetchall()
+            information.close()
+            date={
+                    'fromname':session.get('name'),
+                    'getID':a[q][0],
+                    'toname':d[0][0],
+                    'whatsay':a[q][1],
+            }
+            final[str(q)]=date
+        return jsonify(final)
+    else:
+        return jsonify({'status':'none'})
+
 @app.route('/getinformation/<string:sid>')
 def getinformationa(sid):
     information = sqlite3.connect('sql/information.db')
@@ -80,7 +107,7 @@ def chmark():
 def getmark(sid):
     information = sqlite3.connect('sql/information.db')
     c = information.cursor()
-    c.execute('select mark1,mark2,mark3,mark4,mark5,mark6,mark7,mark8,sports,music,movie,fanju,whatgood,zhanwang from mark,information where schid = "%s"'%sid)
+    c.execute('select mark1,mark2,mark3,mark4,mark5,mark6,mark7,mark8,sports,music,movie,fanju,whatgood,zhanwang from mark,information where information.schid = "%s"'%sid)
     a = c.fetchall()[0]
     date={
             'mark1':a[0],
@@ -113,13 +140,18 @@ def findcard():
         if a:
             final['status']='have'
             for b in range(len(a)):
-                c={
+                information = sqlite3.connect('sql/information.db')
+                d = information.cursor()
+                d.execute('select nickname from information where schid ="%s"'%a[b][1])
+                d.fetchall()
+                information.close()
+                date={
                     'cardID':a[b][0],
-                    'fromID':a[b][1],
+                    'fromname':d[0][0],
                     'time':a[b][2],
                     'whatsay':a[b][3]
                 }
-                final[str(b)]=c
+                final[str(b)]=date
         else:
             final['status']='none'
         return jsonify(final)
@@ -167,6 +199,7 @@ def chng():
         c.execute("update information set nickname = '%s', sgntre = '%s' where schid = '%s'"%(request.form.get('nickname'),request.form.get('sgntre'),session.get('schid')))
         information.commit()
         information.close()
+        session['name']=request.form.get('nickname')
         return jsonify({'status':'success'})
 
 @app.route('/sendcard',methods=['POST'])
@@ -214,7 +247,7 @@ def index():
 
 @app.route('/welcome')
 def indexaa():
-    return render_template('welcome.html')
+    return render_template('user_welcome.html')
 
 @app.route('/habit')
 def indexaaa():
@@ -231,6 +264,10 @@ def indexaaaaa():
 @app.route('/main')
 def indexaaaaaa():
     return render_template('main.html')
+
+@app.route('/cardlist')
+def indexaaaaaaa():
+    return render_template('card_list.html')
 
 @app.route('/checkfirst',methods=['GET'])
 def checkfirst():

@@ -13,7 +13,45 @@
     $(document).ready(function() {
       var i = 0;
       var back_up = document.getElementsByClassName("add").item(0).innerHTML;
+      var object = document.getElementById("custom_habit_zone");
+      
+      $.get("/checkfirst",
+        function(data) {
+          $.get("/getmark/" + data.schid,
+            function(data) {
+              $(".add").remove();
+              for(var i = 0;i <= 7;i++) {
+                value = data['mark'+ (i + 1)]
+                if(value != "none") {
+                  var son = document.createElement("div");
+                  son.className = "docker col-xs-6";
+                  if(i%2 == 0){
+                    son.innerHTML = "<span class='label label_color_" + Math.floor(Math.random()*3 + 1) + "'>" + value + "<a href='javascript:;' id='cha'>×</a>";
+                  }
+                  else {
+                    son.innerHTML = "<span class='label label_color_" + Math.floor(Math.random()*3 + 1) + "' label_right'>" + value + "<a href='javascript:;' id='cha'>×</a>";
+                  }
+                  object.appendChild(son);
+                }
+              }
+              var new_add = document.createElement("div");
+              new_add.className = "docker col-xs-6 add";
+              new_add.innerHTML = back_up;
+              object.appendChild(new_add);
+              $('#sport').val(data.sports);
+              $('#music').val(data.music);
+              $('#movie').val(data.movie);
+              $('#dramma').val(data.fanju);
+              $('#trait').val(data.whatgood);
+              $('#plan').val(data.zhanwang);
+            }); 
+        });
 
+      
+      
+      
+      
+      
       $("input,textarea").click(function() {
         $(this).css("color","#000");
         $(this).val("");
@@ -31,7 +69,6 @@
           var x_item = document.getElementsByClassName("custom_habit");
           x = x_item[0].value;
           document.getElementsByClassName("add").item(0).remove();
-          var object = document.getElementById("custom_habit_zone");
           var son = document.createElement("div");
           son.className = "docker col-xs-6";
           if(i%2 === 0){
@@ -52,52 +89,49 @@
       });
 
       $(document).on('click','#cha',function() {
-        $(this).parent().parent().remove();
+        $(this).parents(".docker").remove();
         if($(".add").length == 0) {
           var new_add = document.createElement("div");
           new_add.className = "docker col-xs-6 add";
           new_add.innerHTML = back_up;
-          document.getElementById("custom_habit_zone").appen.valdChild(new_add);
+          document.getElementById("custom_habit_zone").appendChild(new_add);
         }
       });
       
       $(document).on('click','.btn',function() {
-        alert($(".docker:eq(0)").text().replace(/×/g,''));
-        var mark_1 = $(".docker:eq(0)").text().replace(/x/g,'');
-        var mark_2 = $(".docker:eq(1)").text().replace(/x/g,'');
-        var mark_3 = $(".docker:eq(2)").text().replace(/x/g,'');
-        var mark_4 = $(".docker:eq(3)").text().replace(/x/g,'');
-        var mark_5 = $(".docker:eq(4)").text().replace(/x/g,'');
-        var mark_6 = $(".docker:eq(5)").text().replace(/x/g,'');
-        var mark_7 = $(".docker:eq(6)").text().replace(/x/g,'');
-        var mark_8 = $(".docker:eq(7)").text().replace(/x/g,'');
-        
+        var mark_value = new Array();
+        for(var i = 0;i < ($(".docker").length - 1);i++) {
+          mark_value.push($(".docker:eq(" + i + ")").text().replace(/×/g,""));
+        }
+        for(var r = ($(".docker").length);r <= 8;r++) {
+          mark_value.push("none");
+        }
         $.post(
           '/chmark',
           {
-            mark1: mark_1,
-            mark2: mark_2,
-            mark3: mark_3,
-            mark4: mark_4,
-            mark5: mark_5,
-            mark6: mark_6,
-            mark7: mark_7,
-            mark8: mark_8,
-            sports: $('#sport').val,
-            music: $('#music').val,
-            movie: $('#movie').val,
-            fanju: $('#dramma').val,
-            whatgood: $('#trait').val,
-            zhanwang: $('#plan').val,
+            mark1: mark_value[0],
+            mark2: mark_value[1],
+            mark3: mark_value[2],
+            mark4: mark_value[3],
+            mark5: mark_value[4],
+            mark6: mark_value[5],
+            mark7: mark_value[6],
+            mark8: mark_value[7],
+            sports: $('#sport').val(),
+            music: $('#music').val(),
+            movie: $('#movie').val(),
+            fanju: $('#dramma').val(),
+            whatgood: $('#trait').val(),
+            zhanwang: $('#plan').val()
           },
-          function(status){
-            alert(status);
-            if(status == 200) {
+          function(data){
+            if(data.status == "success") {
               alert("保存成功！");
             }
           }
         );
       });
+
     })
     </script>
 
@@ -363,7 +397,7 @@
 
 <body>
     <div class="nav navbar">
-      <a href="#">
+      <a href="/main">
         <span class="arrow">
           <i class="left-arrow1"></i>
           <i class="left-arrow2"></i>
