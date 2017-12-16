@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <title>Document</title>
+  <script>
+  $(document).ready(function() {
+    $.get('/checkfirst',
+    function(data) {
+      n = data.name;
+      $("#name").text(n);
+    }
+    );
+  
+    $("#next_step").click(function() {
+      window.location.assign("/habit");
+
+    });
+
+
+  });
+  </script>
+
+</head>
+<body>
+  <p>Welcome</p>
+  <p id="name"></p>
+  <button id="next_step">下一步</button>
+</body>
+</html>

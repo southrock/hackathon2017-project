@@ -6,9 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <title>用户资料</title>
-  <script type="text/javascript">
+  <script>
     function imgPreview(fileDom) {
       //判断是否支持FileReader
       if (window.FileReader) {
@@ -38,7 +39,7 @@
 
     function bt_edit() {
       if(document.getElementsByClassName("bt_zone").length === 0) {
-        var nickname = document.getElementById("nickname");
+        var nickname = document.getElementById("nickname").parentElement;
         var sighnature = document.getElementById("sighnature");
         var default_nn = nickname.innerText;
         var default_sn = sighnature.innerText;
@@ -49,6 +50,7 @@
         var bt_save = document.createElement("button");
         bt_save.innerText = "保存";
         bt_save.className = "bt_save col-xs-12";
+        bt_save.id = "btn_save"
         bt_zone.appendChild(bt_save);
         document.getElementById("mainbody").appendChild(bt_zone);
       }
@@ -57,6 +59,47 @@
       }       
 
     }
+
+    $(document).ready(function() {
+      $.get('/checkfirst',function(data) {
+        $.get('/getinformation/' + data.schid,
+        function(data) {
+          $("#nickname").text(data.nickname);
+          $("#sex").text(data.sex);
+          $("#school").text(data.school);
+          $("#grade").text(data.grade);
+          $("#sgntre").text(data.sgntre);
+
+        });
+
+        $(document).on('click','#btn_save',function() {
+          var new_nickname = $("input:eq(1)").val();
+          var new_sign = $("input:eq(2)").val();
+          $.post('/chng',
+            {
+              nickname: new_nickname,
+              sgntre: new_sign
+            },
+            function(data) {
+              if(data.status == 'success') {
+                alert("成功");
+                $("input:eq(1)").remove();
+                $("input:eq(2)").remove();
+                $(".value:eq(0)").html("<p id='nickname'>" + new_nickname + "</p>");
+                $(".value:eq(4)").html("<p id='sgntre'>" + new_sign + "</p>");
+                $(".bt_zone").remove();
+
+              }
+              else {
+                alert("失败");
+              }
+            }
+          
+          )
+        });
+
+      });
+    });
 
   </script>
 
@@ -156,7 +199,7 @@
 
     .pic_upload {
       display: inline-block;
-      background: #ebebeb url(camera.png) no-repeat center center;
+      background: #ebebeb url(pic/camera.png) no-repeat center center;
       border-radius: 40rem;
       border: 0.6rem solid #dfa98c;
 
@@ -216,9 +259,16 @@
     .value {
       display: block;
       font-size: 1.7rem;
-      float: right;
       line-height: 4.8rem;
       color: rgba(0, 0, 0, .54);
+      padding: 0;
+      height: 5rem;
+
+    }
+
+    .value p {
+      display: block;
+      float: right;
 
     }
 
@@ -252,7 +302,7 @@
 
 <body>
   <div class="nav navbar">
-    <a href="#">
+    <a href="/main">
       <span class="arrow">
         <i class="left-arrow1"></i>
         <i class="left-arrow2"></i>
@@ -264,55 +314,55 @@
     <div class="avatar_zone row">
       <div class="avatar">
         <a href="#" class="links">
-          <img src="habit.png">
+          <img src="../pic/habit.png">
         </a>
         <div class="pic_upload" id="preview">
           <input type="file" name="file" onchange="imgPreview(this)" />
         </div>
         <a href="javascript:;" class="links" onclick="bt_edit()">
-          <img src="edit.png">
+          <img src="../pic/edit.png">
         </a>
       </div>
     </div>
     <div class="inf_zone">
       <div class="inf_line row">
-        <div class="type">
+        <div class="type col-xs-6">
           <p>昵称</p>
         </div>
-        <div class="value" id="nickname">
-          <p>example</p>
+        <div class="value col-xs-6">
+          <p id="nickname"></p>
         </div>
       </div>
       <div class="inf_line row">
-        <div class="type">
+        <div class="type col-xs-6">
           <p>性别</p>
         </div>
-        <div class="value">
-          <p></p>
+        <div class="value col-xs-6">
+          <p id="sex"></p>
         </div>
       </div>
       <div class="inf_line row">
-        <div class="type">
+        <div class="type col-xs-6">
           <p>学院</p>
         </div>
-        <div class="value">
-          <p></p>
+        <div class="value col-xs-6">
+          <p id="school"></p>
         </div>
       </div>
       <div class="inf_line row">
-        <div class="type">
+        <div class="type col-xs-6">
           <p>年级</p>
         </div>
-        <div class="value">
-          <p></p>
+        <div class="value col-xs-6">
+          <p id="grade"></p>
         </div>
       </div>
       <div class="inf_line row" style="border:0;">
-        <div class="type">
+        <div class="type col-xs-6">
           <p>个性签名</p>
         </div>
-        <div class="value" id="sighnature">
-          <p></p>
+        <div class="value col-xs-6" id="sighnature">
+          <p id="sgntre"></p>
         </div>
       </div>
     </div>

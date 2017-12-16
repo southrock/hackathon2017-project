@@ -6,8 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <title>交流卡</title>
+  
+  
   <script type="text/javascript">
     function imgPreview(fileDom) {
       //判断是否支持FileReader
@@ -32,7 +35,7 @@
         //图片路径设置为读取的图片
         img.style.backgroundImage = "url(" + e.target.result + ")";
         img.style.backgroundSize = "cover";
-        
+
       };
       reader.readAsDataURL(file);
     }
@@ -45,6 +48,7 @@
     }
 
   </script>
+
 
   <style>
     body {
@@ -177,7 +181,7 @@
 
     .pic_upload {
       display: inline-block;
-      background: #ebebeb url(camera.png) no-repeat center center;
+      background: #ebebeb url("../pic/camera.png") no-repeat center center;
       position: relative;
       background-repeat: no-repeat;
       left: 2rem;
@@ -238,7 +242,7 @@
 
     .radio span {
       display: inline-block;
-      background: rgb(237,28,36);
+      background: rgb(237, 28, 36);
       height: 8px;
       width: 8px;
       position: relative;
@@ -249,10 +253,10 @@
 
     }
 
-    input[type="radio"]:checked + span {
+    input[type="radio"]:checked+span {
       opacity: 1;
 
-}
+    }
 
     .receiver span {
       position: relative;
@@ -260,7 +264,7 @@
 
     }
 
-    .bt_send{
+    .bt_send {
       height: 5rem;
       width: 10rem;
       background-color: #e89366;
@@ -275,6 +279,63 @@
     .bottom {
       position: relative;
       bottom: 2rem;
+      z-index: 2;
+
+    }
+
+    .alert {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      text-align: center;
+      z-index: 10;
+
+    }
+
+    .alert_box {
+      display: inline-block;
+      position: relative;
+      top: 25%;
+      background: #fff;
+      text-align: center;
+      width: 35rem;
+      height: 35rem;
+      border-radius: 8px;
+
+    }
+
+    .alert_box img {
+      width: auto;
+      height: 60%;
+      position: relative;
+      right: 1.2rem;
+      margin-top: 0.8rem;
+      margin-bottom: 0.9rem;
+      
+    }
+
+    .alert_box p {
+      font-size: 2.2rem;
+      margin-bottom: 0.9rem;
+
+    }
+
+    .alert_box button {
+      display: inline-block;
+      background-color: #e89366;
+      border-radius: 8px;
+      border: 0;
+      width: 15rem;
+      height: 3rem;
+      font-size: 1.3rem;
+      color: #fff;
+
     }
 
   </style>
@@ -294,7 +355,7 @@
   <div class="container">
     <div class="row">
       <div class="mainbkpc col-xs-12" style="text-align:center; height:12rem;">
-        <img src="bkimg.png" style="width: auto;height: auto;max-width: 100%;max-height: 100%;">
+        <img src="../pic/bkimg.png" style="width: auto;height: auto;max-width: 100%;max-height: 100%;">
         <p>我们总在寻找契合的人</p>
       </div>
     </div>
@@ -316,26 +377,72 @@
     <div class="radio num row">
       <p>份数</p>
       <label class="radio_num col-xs-2" style="padding-left:3.5rem;">
-        <input type="radio" name="num" style="position: relative;" checked>1份<span></span></label>
+        <input type="radio" name="num" style="position: relative;" checked>1份
+        <span></span>
+      </label>
       <label class="radio_num col-xs-2" style="padding-left:3.5rem;">
-        <input type="radio" name="num" style="position: relative;">2份<span></span></label>
+        <input type="radio" name="num" style="position: relative;">2份
+        <span></span>
+      </label>
       <label class="radio_num col-xs-2" style="padding-left:3.5rem;">
-        <input type="radio" name="num" style="position: relative;">3份<span></span></label>
+        <input type="radio" name="num" style="position: relative;">3份
+        <span></span>
+      </label>
       <label class="radio_num col-xs-2" style="padding-left:3.5rem;">
-        <input type="radio" name="num" style="position: relative;">4份<span></span></label>
+        <input type="radio" name="num" style="position: relative;">4份
+        <span></span>
+      </label>
     </div>
     <div class="radio receiver row" style="margin-top: 0;">
       <p>范围</p>
       <label class="radio_receiver col-xs-2" style="padding-left: 2.4rem;">
-        <input type="radio" name="receiver" style="position: relative;width: 0.8rem;" checked>全校<span></span></label>
+        <input type="radio" name="receiver" id="all" style="position: relative;width: 0.8rem;" checked>全校
+        <span></span>
+      </label>
       <label class="radio_receiver col-xs-2" style="padding-left: 2rem;padding-right:0;">
-        <input type="radio" name="receiver" style="position: relative;width: 0.5rem;">同学院<span style="left:2.5rem;"></span></label>
+        <input type="radio" name="receiver" style="position: relative;width: 0.5rem;">同学院
+        <span style="left:2.5rem;"></span>
+      </label>
     </div>
     <div class="bottom row" style="text-align: center">
-      <input type="button" class="bt_send" value="寄出"></button>
+      <button class="bt_send">寄出</button> 
+      </button>
     </div>
+  </div>
+  <div class="alert">
+      <div class="alert_box">
+        <img src="../pic/success.png">
+        <p>登录失败</p>
+        <button class="bt_back">返 回</button>
+      </div>
   </div>
 
 </body>
+
+<script>
+    $(document).ready(function() {
+        $(".bt_send").click(function() {
+          var num = parseInt($(".radio_num input:checked").parent().text().replace("份",""));
+          var tolimit_value = "you";
+          if($('#all:checked').length == 1) {
+            tolimit_value = "wu"
+          }
+          $.post('/sendcard',
+          {
+            whatsay: $('.ipt_text').val(),
+            count: num,
+            tolimit: tolimit_value
+          },
+          function() {
+            $(".alert").css("display","block");
+          });
+        });
+
+        $(".bt_back").click(function() {
+          $(".alert").css("display","none");
+        });
+
+      });
+</script>
 
 </html>
