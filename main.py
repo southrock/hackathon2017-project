@@ -23,44 +23,60 @@ def getinformation(token):
 def getcard():
     card = sqlite3.connect('sql/card.db')
     c = card.cursor()
-    c.execute('select cardID,fromID,whatsay from card where ((getID = NULL and xylimit = "wu") and fromID <> "%s") limit 1'%session.get('schid'))
-    a = c.fetchall()
-    c.execute('select cardID from card where ((getID = "%s" and whatsay ="%s") and fromID="%s")'%(session.get('schid'),a[0][2],a[0][1]))
-    b = c.fetchall()
-    if b:
-        if a:
-            c.execute('update card set getID = "%s" where cardID = "%s"'%(session.get('schid'),a[0][0]))
+    c1 = card.cursor()
+    c.execute('select cardID,whatsay from card where ((getID = NULL and xylimit = "wu") and fromID <> "%s")'%session.get('schid'))
+    a = c.fetchone()
+    while a:
+        c1.execute('select * from card where (getID = "%s" and whatsay = "%s") limit 1'%(session.get('schid'),a[1]))
+        b = c1.fetchall()
+        if not b:
+            c.execute('update card set getID = "%s" where cardID = "%s"'%(session.get('schid'),a[0]))
             card.commit()
-    c.execute('select cardID,fromID from card where ((getID = NULL and xylimit = "%s") and fromID <> "%s") limit 1;'%(session.get('xy'),session.get('schid')))
+        else:
+            a = c.fetchone()
+    a = []
+    c.execute('select cardID,whatsay from card where ((getID = NULL and xylimit = "%s") and fromID <> "%s");'%(session.get('xy'),session.get('schid')))
     a = c.fetchall()
-    c.execute('select cardID from card where ((getID = "%s" and whatsay ="%s") and fromID="%s")'%(session.get('schid'),a[0][2],a[0][1]))
-    d = c.fetchall()
-    if d:
-        if a:
-            c.execute('update card set getID = "%s" where cardID = "%s"'%(session.get('schid'),a[0][0]))
+    while a:
+        c1.execute('select * from card where (getID = "%s" and whatsay = "%s") limit 1'%(session.get('schid'),a[1]))
+        b = c1.fetchall()
+        if not b:
+            c.execute('update card set getID = "%s" where cardID = "%s"'%(session.get('schid'),a[0]))
             card.commit()
             card.close()
+        else:
+            a = c.fetchone()
+
+@app.route('/responsecard',methods=['POST'])
+def responsecard():
+    if session.get('pass') == 'homurachan' + session.get('schid') + 'homurachan':
+        card = sqlite3.connect('sql/card.db')
+        c = card.cursor()
+        c.execute("insert into card values('%s','%s','%s','wu','wu','%s','%s')"%(session.get('schid')+str(int(time.time())),session.get('schid'),request.form.get('getID'),request.form.get('whatsay'),str(time.time())))
+        card.commit()
+        card.close()
+        return jsonify({'status':'success'})
 
 @app.route('/findmycard')
 def findmycard():
+    getcard()
     card = sqlite3.connect('sql/card.db')
     c = card.cursor()
-    c.execute('select getID,whatsay from card where (fromID = "%s" and getID <> NULL)'%session.get('schid'))
+    c.execute('select getID,whatsay from card where (fromID == "%s" and getID is not null)'%session.get('schid'))
     a = c.fetchall()
     card.close()
     final={}
     if a:
         final['status']='have'
         for q in range(len(a)):
-            information = sqlite3.connect('aql/information.db')
+            information = sqlite3.connect('sql/information.db')
             c = information.cursor()
-            c.execute('select nickname from information where schid = "%s"'%q[0])
+            c.execute('select nickname from information where schid = "%s"'%a[q][0])
             d = c.fetchall()
             information.close()
             date={
                     'fromname':session.get('name'),
                     'getID':a[q][0],
-                    'toname':d[0][0],
                     'whatsay':a[q][1],
             }
             final[str(q)]=date
@@ -107,23 +123,24 @@ def chmark():
 def getmark(sid):
     information = sqlite3.connect('sql/information.db')
     c = information.cursor()
-    c.execute('select mark1,mark2,mark3,mark4,mark5,mark6,mark7,mark8,sports,music,movie,fanju,whatgood,zhanwang from mark,information where information.schid = "%s"'%sid)
-    a = c.fetchall()[0]
+    c.execute('select mark.mark1,mark.mark2,mark.mark3,mark.mark4,mark.mark5,mark.mark6,mark.mark7,mark.mark8,sports,music,movie,fanju,whatgood,zhanwang from mark,information where information.schid = "%s" and mark.schid ="%s" '%(sid,sid))
+    a = c.fetchall()
+    print(a)
     date={
-            'mark1':a[0],
-            'mark2':a[1],
-            'mark3':a[2],
-            'mark4':a[3],
-            'mark5':a[4],
-            'mark6':a[5],
-            'mark7':a[6],
-            'mark8':a[7],
-            'sports':a[8],
-            'music':a[9],
-            'movie':a[10],
-            'fanju':a[11],
-            'whatgood':a[12],
-            'zhanwang':a[13],
+            'mark1':a[0][0],
+            'mark2':a[0][1],
+            'mark3':a[0][2],
+            'mark4':a[0][3],
+            'mark5':a[0][4],
+            'mark6':a[0][5],
+            'mark7':a[0][6],
+            'mark8':a[0][7],
+            'sports':a[0][8],
+            'music':a[0][9],
+            'movie':a[0][10],
+            'fanju':a[0][11],
+            'whatgood':a[0][12],
+            'zhanwang':a[0][13],
         }
     information.close()
     return jsonify(date)
@@ -131,9 +148,10 @@ def getmark(sid):
 @app.route('/findcard')
 def findcard():
     if session.get('pass') == 'homurachan' + session.get('schid') + 'homurachan':
+        getcard()
         card = sqlite3.connect('sql/card.db')
         c = card.cursor()
-        c.execute('select cardID,fromID,time,whatsay from card where schid = "%s"'%session.get('schid'))
+        c.execute('select cardID,fromID,time,whatsay from card where getID = "%s" '%session.get('schid'))
         a = c.fetchall()
         card.close()
         final ={}
@@ -143,11 +161,12 @@ def findcard():
                 information = sqlite3.connect('sql/information.db')
                 d = information.cursor()
                 d.execute('select nickname from information where schid ="%s"'%a[b][1])
-                d.fetchall()
+                e = d.fetchall()
                 information.close()
                 date={
                     'cardID':a[b][0],
-                    'fromname':d[0][0],
+                    'fromID':a[b][1],
+                    'fromname':e[0][0],
                     'time':a[b][2],
                     'whatsay':a[b][3]
                 }
@@ -322,4 +341,5 @@ def main():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0',port=80,debug=True,threaded=True)
+
