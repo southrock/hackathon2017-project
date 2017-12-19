@@ -23,18 +23,13 @@
             var fromName = data.i.fromname;
             var message = data.i.whatsay;
             var x = "";
-            x += "<div class='box' id='card_box'><div class='card_line row'><div class='inf_div'><img src='avatar.jpg' class='avatar'><div class='text_zone'><p class='his_name'>" + fromName + "</p><p class='content'>" + message + "</p></div><span>删除</span></div>";
-            
+            x += "<div class='box' id='card_box'><div class='card_line row'><div class='inf_div'><img src='avatar.jpg' class='avatar'><div class='text_zone'><p class='his_name'>" + fromName + "</p><p class='content'>" + message + "</p></div><span>删除</span></div>";            
           }
           $("#card_box").html(x);
         }
       })
-
-
-
   });
-  
-  
+    
   </script>
 
   <style>
@@ -52,6 +47,7 @@
     .nav {
       background: #dd8c61;
       min-height: 44px;
+
     }
 
     .nav a {
@@ -67,6 +63,7 @@
       display: inline-block;
       position: relative;
       bottom: 16px;
+
     }
 
     .left-arrow1,
@@ -78,7 +75,6 @@
       left: 0;
       top: 0;
       z-index: 5;
-      /*兼容ie8-*/
       border-top: 10px transparent dashed;
       border-left: 10px transparent dashed;
       border-bottom: 10px transparent dashed;
@@ -93,7 +89,6 @@
 
     .left-arrow2 {
       left: 2.5px;
-      /*重要*/
       border-right: 10px #dd8c61 solid;
     }
 
@@ -163,7 +158,6 @@
       width: auto;
       text-align: left;
 
-
     }
 
     .text_zone {
@@ -172,11 +166,13 @@
       width: 60%;
       float: left;
       margin-top: 5%;
+
     }
 
     .his_name {
       width: 100%;
       text-align: left;
+
     }
 
     .content {
@@ -184,7 +180,6 @@
       margin-left: 0;
       text-align: left;
       width: 100%;
-
 
     }
 

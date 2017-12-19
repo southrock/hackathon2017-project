@@ -9,7 +9,8 @@
   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <title>登录</title>
-  <script>
+ 
+ <script>
     $(document).ready(function () {
       $(".bt_login").click(function () {
         var user_name = document.getElementById("username").value;
@@ -47,14 +48,10 @@
           }
         });
       });
-
       $(".bt_back").click(function() {
       $(".alert").css("display","none");
     });
-
-    });
-
-
+  });
 
   </script>
 
@@ -68,7 +65,7 @@
       font-size: 16px;
       min-width: 325px;
       min-height: 620px;
-      background: url("../pic/login_bkimg.png") no-repeat;
+      background: url("http://120.78.132.158/login_bkimg.png") no-repeat;
       background-size: 100% 100%;
 
     }
@@ -120,12 +117,12 @@
     }
 
     .icon_1 {
-      background: url("../pic/ren.png") no-repeat;
+      background: url("http://120.78.132.158/ren.png") no-repeat;
 
     }
 
     .icon_2 {
-      background: url("../pic/suo.png") no-repeat;
+      background: url("http://120.78.132.158/suo.png") no-repeat;
 
     }
 
@@ -211,14 +208,13 @@
 
   </style>
 
-
 </head>
 
 <body>
   <div class="container">
     <div class="bk_img_zone row">
       <div class="bk_img">
-        <img src="../pic/logo.png">
+        <img src="http://120.78.132.158/logo.png">
       </div>
       <p class="headline" style="font-size: 1.1rem">未知圈</p>
       <p class="slogin" style="font-size: 0.9rem;">发现未知的可能</p>
@@ -241,7 +237,7 @@
 
   <div class="alert">
     <div class="alert_box">
-      <img src="../pic/fail.png">
+      <img src="http://120.78.132.158/fail.png">
       <p>登录失败</p>
       <button class="bt_back">返 回</button>
     </div>

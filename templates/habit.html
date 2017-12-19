@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
   <meta charset="UTF-8">
@@ -47,11 +47,6 @@
               $('#plan').val(data.zhanwang);
             });
         });
-
-
-
-
-
 
       $("input,textarea").click(function () {
         $(this).css("color", "#000");
@@ -143,9 +138,8 @@
       $(".bt_back").click(function () {
         window.location.assign("/main");
       });
-
-
     })
+
   </script>
 
   <style>
@@ -177,6 +171,7 @@
       display: inline-block;
       position: relative;
       bottom: 16px;
+
     }
 
     .left-arrow1,
@@ -188,7 +183,6 @@
       left: 0;
       top: 0;
       z-index: 5;
-      /*兼容ie8-*/
       border-top: 10px transparent dashed;
       border-left: 10px transparent dashed;
       border-bottom: 10px transparent dashed;
@@ -199,12 +193,13 @@
 
     .left-arrow1 {
       border-right: 10px black solid;
+
     }
 
     .left-arrow2 {
       left: 2.5px;
-      /*重要*/
       border-right: 10px #dd8c61 solid;
+
     }
 
     .nav a p {
@@ -534,7 +529,7 @@
     </div>
     <div class="alert">
       <div class="alert_box">
-        <img src="../pic/success.png">
+        <img src="http://120.78.132.158/success.png">
         <p>发送成功</p>
         <button class="bt_back">返 回</button>
       </div>
@@ -542,7 +537,7 @@
   </div>
   <div class="alert">
     <div class="alert_box">
-      <img src="../pic/success.png">
+      <img src="http://120.78.132.158/success.png">
       <p>发送成功</p>
       <button class="bt_back">返 回</button>
     </div>

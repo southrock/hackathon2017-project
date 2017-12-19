@@ -9,8 +9,7 @@
   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <title>交流卡</title>
-  
-  
+   
   <script type="text/javascript">
     function imgPreview(fileDom) {
       //判断是否支持FileReader
@@ -23,16 +22,12 @@
       //获取文件
       var file = fileDom.files[0];
       var imageType = /^image\//;
-      //是否是图片
       if (!imageType.test(file.type)) {
         alert("请选择图片！");
         return;
       }
-      //读取完成
       reader.onload = function (e) {
-        //获取图片dom
         var img = document.getElementById("preview");
-        //图片路径设置为读取的图片
         img.style.backgroundImage = "url(" + e.target.result + ")";
         img.style.backgroundSize = "cover";
 
@@ -58,11 +53,13 @@
       height: 100%;
       font-size: 16px;
       min-width: 325px;
+
     }
 
     .nav {
       background: #dd8c61;
       min-height: 44px;
+
     }
 
     .nav a {
@@ -78,6 +75,7 @@
       display: inline-block;
       position: relative;
       bottom: 16px;
+
     }
 
     .left-arrow1,
@@ -89,7 +87,6 @@
       left: 0;
       top: 0;
       z-index: 5;
-      /*兼容ie8-*/
       border-top: 10px transparent dashed;
       border-left: 10px transparent dashed;
       border-bottom: 10px transparent dashed;
@@ -100,12 +97,13 @@
 
     .left-arrow1 {
       border-right: 10px black solid;
+
     }
 
     .left-arrow2 {
       left: 2.5px;
-      /*重要*/
       border-right: 10px #dd8c61 solid;
+
     }
 
     .nav a p {
@@ -123,6 +121,7 @@
     .mainbkpc {
       position: relative;
       top: -1rem;
+
     }
 
     .mainbkpc p {
@@ -151,6 +150,7 @@
       position: relative;
       left: 2rem;
       top: 2.25rem;
+
     }
 
     .ipt_text {
@@ -181,7 +181,7 @@
 
     .pic_upload {
       display: inline-block;
-      background: #ebebeb url("../pic/camera.png") no-repeat center center;
+      background: #ebebeb url("http://120.78.132.158/camera.png") no-repeat center center;
       position: relative;
       background-repeat: no-repeat;
       left: 2rem;
@@ -194,6 +194,7 @@
       opacity: 0;
       height: 9rem;
       width: 9rem;
+
     }
 
     .radio {
@@ -206,7 +207,6 @@
       border-width: 0.5px 0 0 0;
       display: block;
       margin: 0 0.5rem;
-
 
     }
 
@@ -356,7 +356,7 @@
   <div class="container">
     <div class="row">
       <div class="mainbkpc col-xs-12" style="text-align:center; height:12rem;">
-        <img src="../pic/bkimg.png" style="width: auto;height: auto;max-width: 100%;max-height: 100%;">
+        <img src="http://120.78.132.158/bkimg.png" style="width: auto;height: auto;max-width: 100%;max-height: 100%;">
         <p>我们总在寻找契合的人</p>
       </div>
     </div>
@@ -412,7 +412,7 @@
   </div>
   <div class="alert">
       <div class="alert_box">
-        <img src="../pic/success.png">
+        <img src="http://120.78.132.158/success.png">
         <p>发送成功</p>
         <button class="bt_back">返 回</button>
       </div>
