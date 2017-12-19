@@ -24,7 +24,7 @@ def getcard():
     card = sqlite3.connect('sql/card.db')
     c = card.cursor()
     c1 = card.cursor()
-    c.execute('select cardID,whatsay from card where ((getID = NULL and xylimit = "wu") and fromID <> "%s")'%session.get('schid'))
+    c.execute('select cardID,whatsay from card where ((getID is NULL and xylimit = "wu") and fromID <> "%s")'%session.get('schid'))
     a = c.fetchone()
     while a:
         c1.execute('select * from card where (getID = "%s" and whatsay = "%s") limit 1'%(session.get('schid'),a[1]))
@@ -35,7 +35,7 @@ def getcard():
         else:
             a = c.fetchone()
     a = []
-    c.execute('select cardID,whatsay from card where ((getID = NULL and xylimit = "%s") and fromID <> "%s");'%(session.get('xy'),session.get('schid')))
+    c.execute('select cardID,whatsay from card where ((getID is NULL and xylimit = "%s") and fromID <> "%s");'%(session.get('xy'),session.get('schid')))
     a = c.fetchall()
     while a:
         c1.execute('select * from card where (getID = "%s" and whatsay = "%s") limit 1'%(session.get('schid'),a[1]))
