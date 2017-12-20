@@ -23,7 +23,7 @@
               $(".add").remove();
               for (var i = 0; i <= 7; i++) {
                 value = data['mark' + (i + 1)]
-                if (value != "none") {
+                if (value !== "none" && value !== null) {
                   var son = document.createElement("div");
                   son.className = "docker col-xs-6";
                   if (i % 2 == 0) {
@@ -39,12 +39,14 @@
               new_add.className = "docker col-xs-6 add";
               new_add.innerHTML = back_up;
               object.appendChild(new_add);
+              if (datas.count !== 0 ) {
               $('#sport').val(data.sports);
               $('#music').val(data.music);
               $('#movie').val(data.movie);
               $('#dramma').val(data.fanju);
               $('#trait').val(data.whatgood);
               $('#plan').val(data.zhanwang);
+              }
             });
         });
 
@@ -129,14 +131,14 @@
           },
           function (data) {
             if (data.status == "success") {
-
+              $(".alert").css("display","block");
             }
           }
         );
       });
 
       $(".bt_back").click(function () {
-        window.location.assign("/main");
+        $(".alert").css("display","none");
       });
     })
 
