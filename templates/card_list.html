@@ -15,21 +15,41 @@
 
   <script>
   $(document).ready(function() {
+    function getJsonLength(jsonData) {
+      var jsonLength = 0;
+      for(var item in jsonData){
+      jsonLength++;
+      }
+      return jsonLength;
+      }
+
+
     $.get('/findcard',
       function(data) {
-        if(data.status == 'have'){
-          for(var i = 1;i < data.length;i++) {
-            var fromId = data.i.fromID;
-            var fromName = data.i.fromname;
-            var message = data.i.whatsay;
-            var x = "";
-            x += "<div class='box' id='card_box'><div class='card_line row'><div class='inf_div'><img src='avatar.jpg' class='avatar'><div class='text_zone'><p class='his_name'>" + fromName + "</p><p class='content'>" + message + "</p></div><span>删除</span></div>";            
-          }
-          $("#card_box").html(x);
+        var x = "";
+        var final = "";
+        for(var i = 0;i < (getJsonLength(data) - 1);i++) {
+          var cardId = data[i].cardID;
+          var fromName = data[i].fromname;
+          var message = data[i].whatsay;        
+          x += ("<div class='card_line row' id='" + cardId + "'><div class='inf_div'><img src='http://120.78.132.158/avatar.jpg' class='avatar'><div class='text_zone'><p class='his_name'>" + fromName + "</p><p class='content'>" + message + "</p></div><span class='bt_delete'>删除</span></div></div>");            
         }
-      })
+        final = "<div class='box' id='card_box'>" + x + "</div>"
+        $(".box_zone").html(final);
+    });  
+    
+    $(document).on('click','.bt_delete',function() {
+      var cid = $(this).parent().parent().attr("id");
+      $.get('/killcard/' + cid);
+      $(this).parent().parent().remove();
+    });
+  
+  
+  
   });
     
+
+
   </script>
 
   <style>
@@ -183,16 +203,16 @@
 
     }
 
-  .card_line span {
-    display: inline-block;
-    margin: 8% 4% 8% 0;
-    color: rgba(0, 0, 0, 0.75);
-    background-color: #ebebeb;
-    border-radius: 4px;
-    padding: 0.4rem 0;
-    width: 12%;
+    .card_line span {
+      display: inline-block;
+      margin: 8% 4% 8% 0;
+      color: rgba(0, 0, 0, 0.75);
+      background-color: #ebebeb;
+      border-radius: 4px;
+      padding: 0.4rem 0;
+      width: 12%;
 
-  }    
+    }    
 
   </style>
 
@@ -213,6 +233,7 @@
           <button class="col-xs-6">收到的卡</button>
           <button class="col-xs-6">寄出的卡</button>
       </div>
+      <div class="box_zone"></div>
     </div>
 </body>
 </html>
