@@ -52,7 +52,9 @@
 
       $("input,textarea").click(function () {
         $(this).css("color", "#000");
-        $(this).val("");
+        if($(this).val() === "输入" && $(this).val() !== '近期忙的事及对未来的展望...') {
+          $(this).val("");
+        }
       });
 
 
@@ -532,16 +534,9 @@
     <div class="alert">
       <div class="alert_box">
         <img src="http://120.78.132.158/success.png">
-        <p>发送成功</p>
+        <p>保存成功</p>
         <button class="bt_back">返 回</button>
       </div>
-    </div>
-  </div>
-  <div class="alert">
-    <div class="alert_box">
-      <img src="http://120.78.132.158/success.png">
-      <p>发送成功</p>
-      <button class="bt_back">返 回</button>
     </div>
   </div>
 

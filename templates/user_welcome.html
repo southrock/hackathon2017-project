@@ -10,9 +10,18 @@
   <title>Welcome</title>
   <script type="text/javascript">
     $(document).ready(function() {
-      setTimeout(function() {
-        window.location.assign("/habit");
-      },3000);
+      $.get('/checkfirst',function(data) {
+        if(data.count == 0) {
+          setTimeout(function() {
+            window.location.assign("/habit");
+          },3000);
+        }
+        else {
+          setTimeout(function() {
+            window.location.assign("/main");
+          },3000);
+        }
+      });  
     });
 
   </script>

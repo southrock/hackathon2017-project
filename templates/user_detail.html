@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <title>用户资料</title>
+  <script>
+    $(document).ready(function() {
+      var i = 0;
+      $.get("/checkfirst",
+        function (data) {
+          $.get("/getmark/" + data.schid,
+            function (data) {
+              $(".add").remove();
+              for (var i = 0; i <= 7; i++) {
+                value = data['mark' + (i + 1)]
+                if (value !== "none" && value !== null) {
+                  var son = document.createElement("div");
+                  son.className = "docker col-xs-6";
+                  son.innerHTML = "<span class='label label_color_" + Math.floor(Math.random() * 3 + 1) + "'>" + x;
+                  object.appendChild(son);
+                }
+              }
+              if (datas.count !== 0 ) {
+              $('#sport').val(data.sports);
+              $('#music').val(data.music);
+              $('#movie').val(data.movie);
+              $('#dramma').val(data.fanju);
+              $('#trait').val(data.whatgood);
+              $('#plan').val(data.zhanwang);
+              }
+            });
+        });
+    });
+
+
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-size: 16px;
+      min-width: 325px;
+    }
+
+    .nav {
+      position: relative;
+      background: #dd8c61;
+      min-height: 50px;
+      box-shadow: 0px 2px 9px 1px rgba(83, 83, 83, 0.5);
+      z-index: 4;
+    }
+
+    .nav a {
+      position: relative;
+      top: 13px;
+      left: 4px;
+      display: inline-block;
+      text-decoration-line: none;
+      text-decoration: none
+    }
+
+    .arrow {
+      display: inline-block;
+      position: relative;
+      bottom: 16px;
+    }
+
+    .left-arrow1,
+    .left-arrow2 {
+      width: 0;
+      height: 0;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 5;
+      /*兼容ie8-*/
+      border-top: 10px transparent dashed;
+      border-left: 10px transparent dashed;
+      border-bottom: 10px transparent dashed;
+      border-right: 10px #dd8c61 solid;
+      overflow: hidden;
+    }
+
+    .left-arrow1 {
+      border-right: 10px black solid;
+    }
+
+    .left-arrow2 {
+      left: 2.5px;
+      /*重要*/
+      border-right: 10px #dd8c61 solid;
+    }
+
+    .nav a p {
+      position: relative;
+      left: 40px;
+      bottom: 12.5px;
+      font-family: "PingFang Regular", sans-serif;
+      font-size: 20px;
+      font-weight: normal;
+      font-stretch: normal;
+      line-height: 0px;
+      letter-spacing: -1.5px;
+      color: #000000;
+      text-decoration: none
+    }
+
+    .avatar_zone {
+      position: relative;
+      box-shadow: 0 1px 2px 0px #747474;
+      height: 8rem;
+      z-index: 2;
+      margin-top: 1.5rem;
+      transition: box-shadow ease-in-out .15s;
+      -webkit-transition: box-shadow ease-in-out .15s;
+    }
+
+    .avatar_zone:hover{
+      box-shadow: 0 1px 5px 0px #555454
+    }
+
+    .avatar_zone a {
+      display: inline-block;
+    }
+
+    .avatar_zone img {
+      position: relative;
+      float: left;
+      left: 0rem;
+      top: 1rem;
+      height: 65px;
+    }
+
+    .links {
+      position: relative;
+      top: 2.2rem;
+      margin: 0 5rem;
+    }
+
+    .usr_info {
+      position: relative;
+      top: 1rem;
+      left: 1.8rem;
+      max-width: 30rem;
+    }
+
+    .info_nickname {
+      position: relative;
+      font-family: "PingFang Light", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 500;
+      top: 0;
+      bottom: 1rem;
+      color: rgb(36, 36, 36)
+    }
+
+    .info_sex {
+      font-family: "PingFang Thin", sans-serif;
+      position: relative;
+      top: 0rem;
+      bottom: 0rem;
+      float: left;
+      font-size: 1.35rem;
+      color: rgb(155, 155, 155);
+    }
+
+    .info_school {
+      font-family: "PingFang Thin", sans-serif;
+      position: relative;
+
+      left: 2rem;
+      margin-left: 0rem;
+      font-size: 1.35rem;
+      color: rgb(155, 155, 155);
+    }
+
+    .info_sgnture {
+      font-family: "PingFang Thin", sans-serif;
+      position: relative;
+      top: 0rem;
+      bottom: 0rem;
+      margin-left: 0;
+      font-size: 1.35rem;
+      color: rgb(155, 155, 155);
+    }
+
+    .info_sex_school {
+      width: 20rem;
+    }
+
+    .tags_zone {
+      position: relative;
+      margin-top: 1.5rem;
+      min-height: 9rem;
+    }
+
+    .info_tags {
+      margin-top: 0.6rem;
+      margin-left: 1rem;
+    }
+
+    .info_tags_title {
+      margin-left: 1.4rem;
+      margin-top: 0.5rem;
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
+
+    .label {
+      font-family: "PingFang Ultralight", sans-serif;
+      color: rgb(73, 73, 73);
+      font-weight: 100;
+      font-size: 1.4rem;
+      margin-left: 0.2rem;
+      margin-right: 0.2rem;
+    }
+
+    .inf_zone {
+      position: relative;
+      top: 0rem;
+      box-shadow: 0 1px 3px 0 #888888;
+      transition: box-shadow ease-in-out .15s;
+      -webkit-transition: box-shadow ease-in-out .15s;
+      padding: 0 15px;
+      min-width: 20rem;
+      min-height: 31rem;
+    }
+
+    .inf_zone:hover{
+      box-shadow: 0 2px 6px 0 #888888;
+    }
+    .inf_line {
+      height: 4rem;
+      border-style: solid;
+      border-width: 0 0 1px 0;
+      border-color: #cccccc;
+      margin: 0;
+      padding-top: 0.2rem;
+    }
+
+    .type {
+      font-size: 1.7rem;
+      display: inline-block;
+      padding: 0;
+    }
+
+    .type p {
+      font-family: "PingFang Light", sans-serif;
+      line-height: 4rem;
+      margin: 0;
+      font-weight: 540;
+    }
+
+    .value {
+      display: block;
+      font-size: 1.5rem;
+      float: right;
+      margin-top: 1.5rem;
+      margin-right: 1rem;
+      line-height: 1.5rem;
+      font-weight: 100;
+      font-family: "PingFang ExtraLight", sans-serif;
+      color:#5f5f5f
+    }
+
+    .lastline {
+      border-width: 0 0 0 0;
+    }
+
+    .foresee {
+      display: block;
+      font-size: 1.6rem;
+      margin-top: 1.5rem;
+      margin-right: 1rem;
+      line-height: 1.5rem;
+      margin-left: 3rem;
+      color:#5f5f5f
+    }
+
+    .foresee p {
+      margin-top: -1.5rem;
+      float: none;
+    }
+
+    .label_color_1 {
+      background: #c4df9b;
+    }
+
+    .label_color_2 {
+      background: #9cdcf5;
+    }
+
+    .label_color_3 {
+      background: #fdc689;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="nav">
+    <a href="#">
+      <span class="arrow">
+        <i class="left-arrow1"></i>
+        <i class="left-arrow2"></i>
+      </span>
+      <p class="navname">Ta的信息</p>
+    </a>
+  </div>
+  <div class="container">
+    <div class="avatar_zone container row">
+      <img src="http://120.78.132.158/head.png" alt="用户头像" class="img-circle">
+      <div class="usr_info">
+        <div class="info_nickname">鬼畜</div>
+        <div class="info_sex_school">
+          <div class="info_sex">男</div>
+          <div class="info_school">食品学院</div>
+        </div>
+        <div class="info_sgnture">该用户没有个性签名</div>
+      </div>
+    </div>
+    <div class="tags_zone row">
+      <div class="info_tags_title">个性标签</div>
+      <div class="info_tags">
+        <span class="label label-success">电影</span>
+        <span class="label label-info">古风</span>
+        <span class="label label-warning">互联网</span>
+        <span class="label label-info">王者荣耀</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="inf_zone">
+    <div class="inf_line row">
+      <div class="type">
+        <p>运动</p>
+      </div>
+      <div class="value sports">
+        <p id="sport"></p>
+      </div>
+    </div>
+    <div class="inf_line row">
+      <div class="type">
+        <p>音乐或歌手</p>
+      </div>
+      <div class="value musician">
+        <p id="music"></p>
+      </div>
+    </div>
+    <div class="inf_line row">
+      <div class="type">
+        <p>电影</p>
+      </div>
+      <div class="value movie">
+        <p id="movie"></p>
+      </div>
+    </div>
+    <div class="inf_line row">
+      <div class="type">
+        <p>电视剧或番剧</p>
+      </div>
+      <div class="value fanju">
+        <p id="dramma"></p>
+      </div>
+    </div>
+    <div class="inf_line row" style="border:1;">
+      <div class="type">
+        <p>我的特点</p>
+      </div>
+      <div class="value symbol">
+        <p id="trait"></p>
+      </div>
+    </div>
+    <div class="inf_line lastline row">
+      <div class="type">
+        <p>展望</p>
+      </div>
+      <div class="foresee">
+        <p id="plan"></p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+</body>
+
+</html>

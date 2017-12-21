@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <title>回复</title>
+
+  <script>
+  $(document).ready(function() {
+    var url=location.search;
+    var Request = new Object();
+    if(url.indexOf("?")!=-1) {
+      var str = url.substr(1);
+      var strs = str.split("&");
+      for(var i=0;i<strs.length;i++) {
+      　Request[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+      }
+    }
+    $.get('/findcard',function(data) {
+      var x = Request['x'];
+      if(x === undefined) {
+        alert("错误");
+        window.location.assign('/cardlist')
+      }
+      else {
+        var fromId = data[x].fromID;
+        var fromName = data[x].fromname;
+        var message = data[x].whatsay;
+        $("#nickname").text(fromName);
+        $("#Message").text(message);
+        $(".cdtext_box").attr("id",fromId);
+      }
+    });
+
+    $("#btn_reply").click(function() {
+      var ws = $("#ipt_reply").val();
+      var id = $(".cdtext_box").attr("id");
+      $.post("/responsecard",{
+          getID: id,
+          whatsay: ws
+        },
+        function(data) {
+          if(data.status === "success") {
+            $(".alert").css("display","block");
+          }
+        }
+      );
+
+    });
+
+    $(".bt_back").click(function () {
+        $(".alert").css("display","none");
+      });
+  });
+  
+  
+  </script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-size: 16px;
+      min-width: 325px;
+
+    }
+
+    .nav {
+      background: #dd8c61;
+      min-height: 44px;
+
+    }
+
+    .nav a {
+      position: relative;
+      top: 13px;
+      left: 4px;
+      display: inline-block;
+      text-decoration-line: none;
+
+    }
+
+    .arrow {
+      display: inline-block;
+      position: relative;
+      bottom: 16px;
+
+    }
+
+    .left-arrow1,
+    .left-arrow2 {
+      width: 0;
+      height: 0;
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 5;
+      border-top: 10px transparent dashed;
+      border-left: 10px transparent dashed;
+      border-bottom: 10px transparent dashed;
+      border-right: 10px #dd8c61 solid;
+      overflow: hidden;
+
+    }
+
+    .left-arrow1 {
+      border-right: 10px black solid;
+
+    }
+
+    .left-arrow2 {
+      left: 2.5px;
+      border-right: 10px #dd8c61 solid;
+
+    }
+
+    .nav p {
+      position: relative;
+      left: 45%;
+      font-family: PingFangSC-Light;
+      font-size: 18px;
+      font-weight: normal;
+      font-stretch: normal;
+      line-height: 0px;
+      letter-spacing: -1.5px;
+      color: #000000;
+
+    }
+
+    .container {
+      width: 100%;
+
+    }
+
+    .cdtext_box {
+      display: block;
+      margin: 5rem 0.3rem;
+      box-shadow: 0 -0.8rem 1px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      height: 41rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+
+    }
+
+    .nav_line {
+      margin: 3rem 1.5rem 0 1.5rem;
+
+    }
+
+    .nav_line p {
+      display: inline-block;
+      font-size: 2.5rem;
+      margin-bottom: 0;
+
+    }
+
+    #nickname {
+      font-size: 2rem;
+      margin-left: 1.6rem;
+      line-height: 2rem;
+
+    }
+
+    #time {
+      font-size: 1.2rem;
+      float: right;
+      position: relative;
+      line-height: 4rem;
+      color: rgba(0, 0, 0, 0.5);
+      height: 3rem;
+
+    }
+
+    .content {
+      margin-top: 2rem;
+      padding: 0 1.5rem;
+      text-indent: 2em;
+      height: 24rem;
+
+    }
+
+    .sender {
+      display: block;
+      position: absolute;
+      width: 90%;
+      height: 6rem;
+      margin-top: 0.5rem;
+
+    }
+
+    .sender p {
+      float: right;
+      line-height: 10.5rem;
+
+    }
+
+    #avartar {
+      height: 6rem;
+      width: 6rem;
+      float: right;
+      border-radius: 100rem;
+      margin: 0 1.5rem 0 1.5rem;
+
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 5rem;
+      background: #ebebeb;
+
+    }
+
+    #ipt_reply {
+      border: 0;
+      margin: 1.2rem 0.7rem;
+      height: 2.8rem;
+      border-radius: 3px;
+      width: 80%;
+
+    }
+
+    #btn_reply {
+      background: #dd8c61;
+      border: 0;
+      border-radius: 8px;
+      height: 2.8rem;
+      margin: 1.2rem 0;
+      color: #fff;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      width: 12%;
+
+    }
+
+    .alert {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      text-align: center;
+      z-index: 10;
+
+    }
+
+    .alert_box {
+      display: inline-block;
+      position: relative;
+      top: 25%;
+      background: #fff;
+      text-align: center;
+      width: 35rem;
+      height: 35rem;
+      border-radius: 8px;
+
+    }
+
+    .alert_box img {
+      width: auto;
+      height: 60%;
+      position: relative;
+      right: 1.2rem;
+      margin-top: 0.8rem;
+      margin-bottom: 0.9rem;
+
+    }
+
+    .alert_box p {
+      font-size: 2.2rem;
+      margin-bottom: 0.9rem;
+
+    }
+
+    .alert_box button {
+      display: inline-block;
+      background-color: #e89366;
+      border-radius: 8px;
+      border: 0;
+      width: 15rem;
+      height: 3rem;
+      font-size: 1.3rem;
+      color: #fff;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+  <div class="nav navbar">
+    <a href="/cardlist">
+      <span class="arrow">
+        <i class="left-arrow1"></i>
+        <i class="left-arrow2"></i>
+      </span>
+    </a>
+    <p>内容</p>
+  </div>
+  <div class="container">
+    <div class="cdtext_box">
+      <div class="nav_line">
+        <p>Dear</p>
+        <p id="nickname"></p>
+        <p id="time">11:30</p>
+      </div>
+      <div class="content">
+        <p id="Message"></p>
+      </div>
+      <div class="sender">
+        <img id="avartar" src="avatar.jpg">
+        <p></p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <input type="text" id="ipt_reply">
+    <button id="btn_reply">回复</button>
+  </div>
+  <div class="alert">
+      <div class="alert_box">
+        <img src="http://120.78.132.158/success.png">
+        <p>发送成功</p>
+        <button class="bt_back">返 回</button>
+      </div>
+    </div>
+</body>
+
+</html>

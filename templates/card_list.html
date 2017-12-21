@@ -44,7 +44,11 @@
       $(this).parent().parent().remove();
     });
   
-  
+    $(document).on('click','.text_zone',function() {
+      var i = $(this).parent().parent().index();
+      window.location.assign('/reply?x=' + i);
+
+    })
   
   });
     
@@ -161,6 +165,8 @@
     .card_line {
       min-height: 8rem;
       height: auto;
+      border-width: 0 0 1px 0;
+      border-style: solid;
       
     }
 
@@ -185,7 +191,7 @@
       height: 100%;
       width: 60%;
       float: left;
-      margin-top: 5%;
+      padding: 5% 0;
 
     }
 

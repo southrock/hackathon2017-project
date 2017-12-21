@@ -82,7 +82,7 @@
             },
             function(data) {
               if(data.status == 'success') {
-                alert("成功");
+                $(".alert").css("display","block");
                 $("input:eq(1)").remove();
                 $("input:eq(2)").remove();
                 $(".value:eq(0)").html("<p id='nickname'>" + new_nickname + "</p>");
@@ -97,6 +97,11 @@
           )
         });
       });
+
+      $(".bt_back").click(function () {
+        $(".alert").css("display","none");
+      });
+
     });
 
   </script>
@@ -292,6 +297,61 @@
 
     }
   
+    .alert {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.75);
+      text-align: center;
+      z-index: 10;
+
+    }
+
+    .alert_box {
+      display: inline-block;
+      position: relative;
+      top: 25%;
+      background: #fff;
+      text-align: center;
+      width: 35rem;
+      height: 35rem;
+      border-radius: 8px;
+
+    }
+
+    .alert_box img {
+      width: auto;
+      height: 60%;
+      position: relative;
+      right: 1.2rem;
+      margin-top: 0.8rem;
+      margin-bottom: 0.9rem;
+
+    }
+
+    .alert_box p {
+      font-size: 2.2rem;
+      margin-bottom: 0.9rem;
+
+    }
+
+    .alert_box button {
+      display: inline-block;
+      background-color: #e89366;
+      border-radius: 8px;
+      border: 0;
+      width: 15rem;
+      height: 3rem;
+      font-size: 1.3rem;
+      color: #fff;
+
+    }
+
   </style>
 
 </head>
@@ -363,7 +423,13 @@
       </div>
     </div>
   </div>
-
+  <div class="alert">
+      <div class="alert_box">
+        <img src="http://120.78.132.158/success.png">
+        <p>保存成功</p>
+        <button class="bt_back">返 回</button>
+      </div>
+    </div>
 
 </body>
 

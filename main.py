@@ -288,6 +288,10 @@ def indexaaaaaa():
 def indexaaaaaaa():
     return render_template('card_list.html')
 
+@app.route('/reply')
+def indexaaaaaaaa():
+    return render_template('reply.html')
+
 @app.route('/checkfirst',methods=['GET'])
 def checkfirst():
         return jsonify({'name':session.get('name'),'count':session.get('count'),'schid':session.get('schid')})

@@ -32,14 +32,7 @@
                   token: data.token
                 },
                 function() {
-                  $.get('/checkfirst',function(data) {
-                    if(data.count == 0) {
-                      window.location.assign("/main");
-                    }
-                    else{
-                      window.location.assign("/welcome");
-                    }
-                  })
+                  window.location.assign("/welcome");
                 });
               }
             else {
