@@ -292,6 +292,10 @@ def indexaaaaaaa():
 def indexaaaaaaaa():
     return render_template('reply.html')
 
+@app.route('/userinf')
+def indexaaaaaaaaa():
+    return render_template('user_detail.html')
+
 @app.route('/checkfirst',methods=['GET'])
 def checkfirst():
         return jsonify({'name':session.get('name'),'count':session.get('count'),'schid':session.get('schid')})

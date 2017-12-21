@@ -24,6 +24,12 @@
       　Request[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
       }
     }
+
+    $.get("/checkfirst",
+      function(data) {
+        $("#yourname").text(data.name);
+      });
+
     $.get('/findcard',function(data) {
       var x = Request['x'];
       if(x === undefined) {
@@ -57,8 +63,14 @@
     });
 
     $(".bt_back").click(function () {
-        $(".alert").css("display","none");
-      });
+      $(".alert").css("display","none");
+    });
+
+    $(document).on('click','img',function() {
+      var i = $(this).parent().parent().attr("id");
+      window.location.assign('/userinf?schid=' + i);
+    });
+
   });
   
   
@@ -325,8 +337,8 @@
         <p id="Message"></p>
       </div>
       <div class="sender">
-        <img id="avartar" src="avatar.jpg">
-        <p></p>
+        <img id="avartar" src="http://120.78.132.158/head.png">
+        <p id="yourname"></p>
       </div>
     </div>
   </div>

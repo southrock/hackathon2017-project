@@ -7,34 +7,53 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
   <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
   <title>用户资料</title>
+
   <script>
     $(document).ready(function() {
       var i = 0;
-      $.get("/checkfirst",
+      var object = document.getElementById("custom_habit_zone");
+      var url=location.search;
+      var Request = new Object();
+      if(url.indexOf("?")!=-1) {
+        var str = url.substr(1);
+        var strs = str.split("&");
+        for(var i=0;i<strs.length;i++) {
+        　Request[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+        }
+      }
+
+
+      $.get("/getmark/" + Request['schid'],
         function (data) {
-          $.get("/getmark/" + data.schid,
-            function (data) {
-              $(".add").remove();
-              for (var i = 0; i <= 7; i++) {
-                value = data['mark' + (i + 1)]
-                if (value !== "none" && value !== null) {
-                  var son = document.createElement("div");
-                  son.className = "docker col-xs-6";
-                  son.innerHTML = "<span class='label label_color_" + Math.floor(Math.random() * 3 + 1) + "'>" + x;
-                  object.appendChild(son);
-                }
-              }
-              if (datas.count !== 0 ) {
-              $('#sport').val(data.sports);
-              $('#music').val(data.music);
-              $('#movie').val(data.movie);
-              $('#dramma').val(data.fanju);
-              $('#trait').val(data.whatgood);
-              $('#plan').val(data.zhanwang);
-              }
-            });
+          for (var i = 0; i <= 7; i++) {
+            value = data['mark' + (i + 1)]
+            if (value !== "none" && value !== null) {
+              document.getElementById("tag_zone").innerHTML += "<span class='label label_color_" + Math.floor(Math.random() * 3 + 1) + "'>" + value;
+            }
+          }
+          if (data.count !== 0 ) {
+            $('#sport').text(data.sports);
+            $('#music').text(data.music);
+            $('#movie').text(data.movie);
+            $('#dramma').text(data.fanju);
+            $('#trait').text(data.whatgood);
+            $('#plan').text(data.zhanwang);
+          }
+      });
+
+      $.get('/getinformation/' + Request['schid'],
+        function(data) {
+          $("#nickname").text(data.nickname);
+          $("#sex").text(data.sex);
+          $("#school").text(data.school);
+          $("#grade").text(data.grade);
+          $("#sgntre").text(data.sgntre);
         });
+
+
+
     });
 
 
@@ -47,14 +66,14 @@
       height: 100%;
       font-size: 16px;
       min-width: 325px;
+      background: #ebebeb;
+
     }
 
     .nav {
-      position: relative;
       background: #dd8c61;
-      min-height: 50px;
-      box-shadow: 0px 2px 9px 1px rgba(83, 83, 83, 0.5);
-      z-index: 4;
+      min-height: 44px;
+
     }
 
     .nav a {
@@ -63,13 +82,14 @@
       left: 4px;
       display: inline-block;
       text-decoration-line: none;
-      text-decoration: none
+
     }
 
     .arrow {
       display: inline-block;
       position: relative;
       bottom: 16px;
+
     }
 
     .left-arrow1,
@@ -81,12 +101,12 @@
       left: 0;
       top: 0;
       z-index: 5;
-      /*兼容ie8-*/
       border-top: 10px transparent dashed;
       border-left: 10px transparent dashed;
       border-bottom: 10px transparent dashed;
       border-right: 10px #dd8c61 solid;
       overflow: hidden;
+
     }
 
     .left-arrow1 {
@@ -95,22 +115,21 @@
 
     .left-arrow2 {
       left: 2.5px;
-      /*重要*/
       border-right: 10px #dd8c61 solid;
     }
 
     .nav a p {
       position: relative;
-      left: 40px;
+      left: 36px;
       bottom: 12.5px;
-      font-family: "PingFang Regular", sans-serif;
-      font-size: 20px;
+      font-family: PingFangSC-Light;
+      font-size: 18px;
       font-weight: normal;
       font-stretch: normal;
       line-height: 0px;
       letter-spacing: -1.5px;
       color: #000000;
-      text-decoration: none
+
     }
 
     .avatar_zone {
@@ -152,6 +171,10 @@
       max-width: 30rem;
     }
 
+    .usr_info p {
+      margin: 0;
+    }
+
     .info_nickname {
       position: relative;
       font-family: "PingFang Light", sans-serif;
@@ -160,6 +183,7 @@
       top: 0;
       bottom: 1rem;
       color: rgb(36, 36, 36)
+
     }
 
     .info_sex {
@@ -219,8 +243,9 @@
       color: rgb(73, 73, 73);
       font-weight: 100;
       font-size: 1.4rem;
-      margin-left: 0.2rem;
-      margin-right: 0.2rem;
+      margin: 0.2rem 0.2rem;
+      float: left;
+
     }
 
     .inf_zone {
@@ -307,7 +332,7 @@
 
 <body>
   <div class="nav">
-    <a href="#">
+    <a href="/cardlist">
       <span class="arrow">
         <i class="left-arrow1"></i>
         <i class="left-arrow2"></i>
@@ -319,21 +344,18 @@
     <div class="avatar_zone container row">
       <img src="http://120.78.132.158/head.png" alt="用户头像" class="img-circle">
       <div class="usr_info">
-        <div class="info_nickname">鬼畜</div>
+        <div class="info_nickname"><p id="nickname">啊</p></div>
         <div class="info_sex_school">
-          <div class="info_sex">男</div>
-          <div class="info_school">食品学院</div>
+          <div class="info_sex"><p id="sex">男</p></div>
+          <div class="info_school"><p id="school">食品学院</p></div>
         </div>
-        <div class="info_sgnture">该用户没有个性签名</div>
+        <div class="info_sgnture"><p id="sgntre">该用户没有个性签名</p></div>
       </div>
     </div>
     <div class="tags_zone row">
       <div class="info_tags_title">个性标签</div>
-      <div class="info_tags">
-        <span class="label label-success">电影</span>
-        <span class="label label-info">古风</span>
-        <span class="label label-warning">互联网</span>
-        <span class="label label-info">王者荣耀</span>
+      <div class="info_tags" id="tag_zone">
+
       </div>
     </div>
 

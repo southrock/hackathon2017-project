@@ -29,10 +29,10 @@
         var x = "";
         var final = "";
         for(var i = 0;i < (getJsonLength(data) - 1);i++) {
-          var cardId = data[i].cardID;
+          var fromId = data[i].fromID;
           var fromName = data[i].fromname;
           var message = data[i].whatsay;        
-          x += ("<div class='card_line row' id='" + cardId + "'><div class='inf_div'><img src='http://120.78.132.158/avatar.jpg' class='avatar'><div class='text_zone'><p class='his_name'>" + fromName + "</p><p class='content'>" + message + "</p></div><span class='bt_delete'>删除</span></div></div>");            
+          x += ("<div class='card_line row' id='" + fromId + "'><div class='inf_div'><img src='http://120.78.132.158/head.png' class='avatar'><div class='text_zone'><p class='his_name'>" + fromName + "</p><p class='content'>" + message + "</p></div><span class='bt_delete'>删除</span></div></div>");            
         }
         final = "<div class='box' id='card_box'>" + x + "</div>"
         $(".box_zone").html(final);
@@ -47,8 +47,12 @@
     $(document).on('click','.text_zone',function() {
       var i = $(this).parent().parent().index();
       window.location.assign('/reply?x=' + i);
+    });
 
-    })
+    $(document).on('click','img',function() {
+      var i = $(this).parent().parent().attr("id");
+      window.location.assign('/userinf?schid=' + i);
+    });
   
   });
     
@@ -140,7 +144,7 @@
       height: 5rem;
       background: #fff;
       color: rgba(0, 0, 0, 0.87);
-      border: 0;
+      border-width: 0 1px;
 
 
     }
@@ -176,7 +180,7 @@
       height: 13%;
       width: 13%;
       float: left;
-      margin: 5%;
+      margin: 5.5%;
 
     }
 
@@ -237,7 +241,7 @@
     <div class="container">
       <div class="bt_nav row">
           <button class="col-xs-6">收到的卡</button>
-          <button class="col-xs-6">寄出的卡</button>
+          <button class="col-xs-6" onclick="alert('暂不支持查看哦~')">寄出的卡</button>
       </div>
       <div class="box_zone"></div>
     </div>

@@ -17,8 +17,8 @@
       var object = document.getElementById("custom_habit_zone");
 
       $.get("/checkfirst",
-        function (data) {
-          $.get("/getmark/" + data.schid,
+        function (datas) {
+          $.get("/getmark/" + datas.schid,
             function (data) {
               $(".add").remove();
               for (var i = 0; i <= 7; i++) {
@@ -27,10 +27,10 @@
                   var son = document.createElement("div");
                   son.className = "docker col-xs-6";
                   if (i % 2 == 0) {
-                    son.innerHTML = "<span class='label label_color_" + Math.floor(Math.random() * 3 + 1) + "'>" + value + "<a href='javascript:;' id='cha'>×</a>";
+                    son.innerHTML = "<span class='label label_color_" + Math.floor(Math.random() * 3 + 1) + "'>" + value + "<a href='javascript:;' id='cha'>×</a></span>";
                   }
                   else {
-                    son.innerHTML = "<span class='label label_color_" + Math.floor(Math.random() * 3 + 1) + "' label_right'>" + value + "<a href='javascript:;' id='cha'>×</a>";
+                    son.innerHTML = "<span class='label label_color_" + Math.floor(Math.random() * 3 + 1) + "' label_right'>" + value + "<a href='javascript:;' id='cha'>×</a></span>";
                   }
                   object.appendChild(son);
                 }
@@ -39,13 +39,13 @@
               new_add.className = "docker col-xs-6 add";
               new_add.innerHTML = back_up;
               object.appendChild(new_add);
-              if (datas.count !== 0 ) {
-              $('#sport').val(data.sports);
-              $('#music').val(data.music);
-              $('#movie').val(data.movie);
-              $('#dramma').val(data.fanju);
-              $('#trait').val(data.whatgood);
-              $('#plan').val(data.zhanwang);
+              if (data.sports !== null ) {
+                $('#sport').val(data.sports);
+                $('#music').val(data.music);
+                $('#movie').val(data.movie);
+                $('#dramma').val(data.fanju);
+                $('#trait').val(data.whatgood);
+                $('#plan').val(data.zhanwang);
               }
             });
         });
@@ -100,43 +100,55 @@
 
       $(document).on('click', '.btn', function () {
         var mark_value = new Array();
-        for (var i = 0; i < ($(".docker").length - 1); i++) {
-          if ($(".docker:eq(" + i + ")").text().replace(/×/g, "").length > 10) {
-            alert("标签字符数不能超过十个")
-            mark_value.push("none");
+        var num = 0;
+        $("input").each(function() {
+          if($(this).val() == "输入" || $(this).val() == "") {
+            num++;
           }
-          else {
-            mark_value.push($(".docker:eq(" + i + ")").text().replace(/×/g, ""));
-          }
+        });
+        if(num !== 0 || $("textarea").text() !== '近期忙的事及对未来的展望...') {
+          alert("请完成输入");
         }
-
-        for (var r = ($(".docker").length); r <= 8; r++) {
-          mark_value.push("none");
-        }
-        $.post(
-          '/chmark',
-          {
-            mark1: mark_value[0],
-            mark2: mark_value[1],
-            mark3: mark_value[2],
-            mark4: mark_value[3],
-            mark5: mark_value[4],
-            mark6: mark_value[5],
-            mark7: mark_value[6],
-            mark8: mark_value[7],
-            sports: $('#sport').val(),
-            music: $('#music').val(),
-            movie: $('#movie').val(),
-            fanju: $('#dramma').val(),
-            whatgood: $('#trait').val(),
-            zhanwang: $('#plan').val()
-          },
-          function (data) {
-            if (data.status == "success") {
-              $(".alert").css("display","block");
+        else {
+          for (var i = 0; i < ($(".docker").length - 1); i++) {
+            if($(".docker:eq(" + i + ")").text().replace(/×/g, "").length > 10) {
+              alert("标签字符数不能超过十个")
+              mark_value.push("none");
+            }
+            else {
+              mark_value.push($(".docker:eq(" + i + ")").text().replace(/×/g, ""));
             }
           }
-        );
+
+          for (var r = ($(".docker").length); r <= 8; r++) {
+            mark_value.push("none");
+          }
+          $.post(
+            '/chmark',
+            {
+              mark1: mark_value[0],
+              mark2: mark_value[1],
+              mark3: mark_value[2],
+              mark4: mark_value[3],
+              mark5: mark_value[4],
+              mark6: mark_value[5],
+              mark7: mark_value[6],
+              mark8: mark_value[7],
+              sports: $('#sport').val(),
+              music: $('#music').val(),
+              movie: $('#movie').val(),
+              fanju: $('#dramma').val(),
+              whatgood: $('#trait').val(),
+              zhanwang: $('#plan').val()
+            },
+            function (data) {
+              if (data.status == "success") {
+                $(".alert").css("display","block");
+              }
+            }
+          );
+        }
+
       });
 
       $(".bt_back").click(function () {
