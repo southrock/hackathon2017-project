@@ -13,7 +13,7 @@
       $.get('/checkfirst',function(data) {
         if(data.count == 0) {
           setTimeout(function() {
-            window.location.assign("/habit");
+            window.location.assign("/habit" + "?first=yes");
           },3000);
         }
         else {

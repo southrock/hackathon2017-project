@@ -15,6 +15,21 @@
       var i = 0;
       var back_up = document.getElementsByClassName("add").item(0).innerHTML;
       var object = document.getElementById("custom_habit_zone");
+      var url=location.search;
+      var Request = new Object();
+      if(url.indexOf("?")!=-1) {
+        var str = url.substr(1);
+        var strs = str.split("&");
+        for(var i=0;i<strs.length;i++) {
+        　Request[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+        }
+      }
+
+      if(Request['first'] === "yes") {
+        var html = "<p class='first_p'>兴趣</p>"
+        $("div:first").html(html);
+
+      }
 
       $.get("/checkfirst",
         function (datas) {
@@ -152,7 +167,13 @@
       });
 
       $(".bt_back").click(function () {
-        $(".alert").css("display","none");
+        if(Request['first'] === "yes") {
+          $(".alert").css("display","none");
+          window.location.assign('/main');
+        }
+        else {
+          $(".alert").css("display","none");
+        }
       });
     })
 
@@ -172,6 +193,7 @@
     .nav {
       background: #dd8c61;
       min-height: 44px;
+      
     }
 
     .nav a {
@@ -218,6 +240,17 @@
 
     }
 
+    .first_p {
+      text-align: center;
+      font-size: 18px;
+      letter-spacing: -1.5px;
+      color: #000000;
+      line-height: 4.8rem;
+      margin: 0;
+      height: 3rem;
+
+    }
+
     .nav a p {
       position: relative;
       left: 36px;
@@ -242,7 +275,7 @@
     }
 
     .labels_zone {
-      height: 15rem;
+      height: 13rem;
       border-color: rgba(0, 0, 0, 0.5);
       border-style: solid;
       border-width: 1px 0 0 0;

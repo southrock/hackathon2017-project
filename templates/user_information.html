@@ -38,20 +38,19 @@
     }
 
     function bt_edit() {
-      if(document.getElementsByClassName("bt_zone").length === 0) {
+      if(document.getElementsByClassName("bt_save").length === 0) {
         var nickname = document.getElementById("nickname").parentElement;
         var sighnature = document.getElementById("sighnature");
         var default_nn = nickname.innerText;
         var default_sn = sighnature.innerText;
         nickname.innerHTML = "<input type='text' class='hd_ipt' id='nn_value' value='" + default_nn + "'>";
         sighnature.innerHTML = "<input type='text' class='hd_ipt' id='sn_value' value='" + default_sn + "'>";
-        var bt_zone = document.createElement("div");
-        bt_zone.className = "bt_zone row";
         var bt_save = document.createElement("button");
         bt_save.innerText = "保存";
         bt_save.className = "bt_save col-xs-12";
         bt_save.id = "btn_save"
-        bt_zone.appendChild(bt_save);
+        document.getElementById("btn_zone").innerHTML = "";
+        document.getElementById("btn_zone").appendChild(bt_save);
         document.getElementById("mainbody").appendChild(bt_zone);
       }
       else {
@@ -87,7 +86,7 @@
                 $("input:eq(2)").remove();
                 $(".value:eq(0)").html("<p id='nickname'>" + new_nickname + "</p>");
                 $(".value:eq(4)").html("<p id='sgntre'>" + new_sign + "</p>");
-                $(".bt_zone").remove();
+                $("#btn_zone").text("<button class='bt_exit col-xs-12' id='btn_exit'>退出登录</button>");
 
               }
               else {
@@ -96,6 +95,11 @@
             }        
           )
         });
+      });
+
+      $(document).on('click','#btn_exit',function() {
+        alert("退出成功");
+        window.location.assign('/');
       });
 
       $(".bt_back").click(function () {
@@ -188,6 +192,7 @@
 
     .avatar_zone a {
       display: inline-block;
+
     }
 
     .avatar {
@@ -204,7 +209,7 @@
       background-size: contain;
       border-radius: 40rem;
       border: 0.6rem solid #dfa98c;
-
+      margin: 0 13.4%;
 
     }
 
@@ -219,7 +224,6 @@
     .links {
       position: relative;
       top: 2.2rem;
-      margin: 0 13.4%;
 
     }
 
@@ -278,15 +282,18 @@
       background: #ebebeb;
       height: 2.5rem;
       border: 0;
+      float: right;
+      margin: 8% 0;
+
     }
 
     .bt_zone {
       position: relative;
-      bottom: -9rem;
+      bottom: -4.5rem;
 
     }
 
-    .bt_save {
+    .bt_zone button {
       height: 5.5rem; 
       width: 92%;
       display: block;
@@ -297,7 +304,7 @@
       box-shadow: 0 0 1px rgba(0, 0, 0, .5);
 
     }
-  
+
     .alert {
       display: none;
       position: absolute;
@@ -422,6 +429,9 @@
           <p id="sgntre"></p>
         </div>
       </div>
+    </div>
+    <div class="bt_zone row" id="btn_zone">
+      <button class="bt_exit col-xs-12" id="btn_exit">退出登录</button>
     </div>
   </div>
   <div class="alert">

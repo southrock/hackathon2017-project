@@ -30,14 +30,20 @@
         var final = "";
         for(var i = 0;i < (getJsonLength(data) - 1);i++) {
           var fromId = data[i].fromID;
+          var cardId = data[i].cardID;
           var fromName = data[i].fromname;
           var message = data[i].whatsay;        
-          x += ("<div class='card_line row' id='" + fromId + "'><div class='inf_div'><img src='http://120.78.132.158/head.png' class='avatar'><div class='text_zone'><p class='his_name'>" + fromName + "</p><p class='content'>" + message + "</p></div><span class='bt_delete'>删除</span></div></div>");            
+          x += ("<div class='card_line row' id='" + cardId + "' from='" + fromId + "'><div class='inf_div'><img src='http://120.78.132.158/head.png' class='avatar'><div class='text_zone'><p class='his_name'>" + fromName + "</p><p class='content'>" + message + "</p></div><span class='bt_delete'>删除</span></div></div>");            
         }
         final = "<div class='box' id='card_box'>" + x + "</div>"
         $(".box_zone").html(final);
     });  
     
+    $.get('/findmycard',
+      function(data) {
+        
+    }),
+
     $(document).on('click','.bt_delete',function() {
       var cid = $(this).parent().parent().attr("id");
       $.get('/killcard/' + cid);
@@ -50,7 +56,7 @@
     });
 
     $(document).on('click','img',function() {
-      var i = $(this).parent().parent().attr("id");
+      var i = $(this).parent().parent().attr("from");
       window.location.assign('/userinf?schid=' + i);
     });
   
@@ -139,6 +145,11 @@
 
     }
 
+    .bt_nav {
+      margin: 0;
+
+    }
+
     .bt_nav button{
       display: inline-block;
       height: 5rem;
@@ -210,6 +221,13 @@
       margin-left: 0;
       text-align: left;
       width: 100%;
+
+    }
+
+    .card_line {
+      width: 100%;
+      padding: 0;
+      margin: 0;
 
     }
 
